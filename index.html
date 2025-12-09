@@ -3,9 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add 無字倉頡</title>
-    <meta name="description" content="Shaohan Sun's Contact">
+    <title>Shaohan Sun - Profile</title>
+    <meta name="description" content="Shaohan Sun (無字倉頡) - Econ student, Homelab enthusiast, Investor, and Rhythm Game player.">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wuzicangjie.github.io/">
+    <meta property="og:title" content="Shaohan Sun - Profile">
+    <meta property="og:description" content="Econ student. Homelab/Investment/Rhythm Games">
+    <meta property="og:image" content="assets/images/avatar.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://wuzicangjie.github.io/">
+    <meta property="twitter:title" content="Shaohan Sun - Profile">
+    <meta property="twitter:description" content="Econ student. Homelab/Investment/Rhythm Games">
+    <meta property="twitter:image" content="assets/images/avatar.jpg">
+
+    <!-- Preload Avatar for Performance -->
+    <link rel="preload" as="image" href="assets/images/avatar.jpg">
+
     <!-- Import Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -123,18 +141,21 @@
         // --- 1. Language Data Definition ---
         const i18n = {
             zh: {
+                title: "孙少瀚 - 个人主页",
                 name: "孙少瀚",
                 bio: "Econ student. Homelab/投资/音游",
                 saveContact: "添加联系人",
                 footer: "© 2025 无字仓颉. All Rights Reserved."
             },
             en: {
+                title: "Shaohan Sun - Profile",
                 name: "Shaohan Sun",
                 bio: "Econ student. Homelab/Investment/Rhythm Games",
                 saveContact: "Save Contact",
                 footer: "© 2025 wuzicangjie. All Rights Reserved."
             },
             ja: {
+                title: "孫少瀚 - プロフィール",
                 name: "孫少瀚",
                 bio: "Econ student. 自宅サーバー・投資・音ゲー",
                 saveContact: "連絡先を追加",
@@ -198,6 +219,8 @@ END:VCARD`
         const t = i18n[currentLang];
 
         // --- 4. Update Page Text ---
+        document.title = t.title;
+        document.documentElement.lang = currentLang;
         document.getElementById('profile-name').innerText = t.name;
         document.getElementById('profile-bio').innerText = t.bio;
         document.getElementById('btn-save-contact').innerText = t.saveContact;
@@ -218,14 +241,8 @@ END:VCARD`
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            URL.revokeObjectURL(url);
         };
-
-        // Console Log Egg
-        console.log(
-            `%c ${t.name} %c https://me.wuzicangjie.com/ `,
-            "color: white; background: #3b82f6; padding: 5px 10px; border-radius: 5px 0 0 5px;",
-            "background: #1f2937; color: #fff; padding: 5px 10px; border-radius: 0 5px 5px 0;"
-        );
     })();
     </script>
 </body>
