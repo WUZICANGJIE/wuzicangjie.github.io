@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add 無字倉頡</title>
+    <meta name="description" content="Shaohan Sun's Contact">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Import Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        @media (prefers-color-scheme: dark) {
+            .glass-card {
+                background: rgba(30, 30, 30, 0.7);
+            }
+        }
+        
+        /* Social icon common styles */
+        .social-icon {
+            width: 1.75rem; /* w-7 equivalent */
+            height: 1.75rem; /* h-7 equivalent */
+            margin-bottom: 0.25rem; /* mb-1 equivalent */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-zinc-900 dark:text-gray-200 min-h-screen flex flex-col justify-center items-center p-4 font-sans transition-colors duration-300">
+
+    <main class="w-full max-w-md mx-auto">
+        
+        <div class="glass-card rounded-3xl shadow-xl border border-white/20 dark:border-white/10 p-8 text-center animate-fade-in opacity-0">
+            
+            <!-- Avatar -->
+            <div class="relative mb-6 inline-block group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                <img 
+                    src="assets/images/avatar.jpg" 
+                    alt="Avatar" 
+                    class="relative w-28 h-28 rounded-full border-4 border-white dark:border-zinc-800 shadow-lg object-cover mx-auto transform transition duration-500 hover:scale-105"
+                    onerror="this.src='https://ui-avatars.com/api/?name=Wu+Zi&background=random'"
+                >
+            </div>
+
+            <!-- Title and Bio (with ID for JS update) -->
+            <h1 id="profile-name" class="text-2xl font-bold mb-2 tracking-tight">Shaohan Sun</h1>
+            <p id="profile-bio" class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed whitespace-pre-line">
+                Econ student. Homelab/Investment/Rhythm Games
+            </p>
+
+            <!-- Add Contact Button -->
+            <button onclick="downloadVcf()" class="mb-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 animate-fade-in delay-100">
+                <img src="assets/icons/contact.svg" class="w-5 h-5 brightness-0 invert" alt="Contact">
+                <span id="btn-save-contact">Save Contact</span>
+            </button>
+
+            <!-- Social Icon Matrix (3-column grid) -->
+            <div class="grid grid-cols-3 gap-4 animate-fade-in opacity-0 delay-200">
+                <!-- Line -->
+                <a href="https://line.me/ti/p/mQdP8ETk4a" target="_blank" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-green-50 dark:hover:bg-green-900/20 text-gray-500 hover:text-[#00B900] transition-colors">
+                    <img src="assets/icons/line.svg" class="social-icon opacity-70 dark:invert" alt="Line">
+                    <span class="text-xs">Line</span>
+                </a>
+                
+                <!-- Discord -->
+                <a href="https://discord.gg/aJeAmQ66" target="_blank" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-900/20 text-gray-500 hover:text-[#5865F2] transition-colors">
+                    <img src="assets/icons/discord.svg" class="social-icon opacity-70 dark:invert" alt="Discord">
+                    <span class="text-xs">Discord</span>
+                </a>
+
+                <!-- Telegram -->
+                <a href="https://t.me/wuzicangjie" target="_blank" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-sky-50 dark:hover:bg-sky-900/20 text-gray-500 hover:text-[#0088cc] transition-colors">
+                    <img src="assets/icons/telegram.svg" class="social-icon opacity-70 dark:invert" alt="Telegram">
+                    <span class="text-xs">Telegram</span>
+                </a>
+
+                <!-- X -->
+                <a href="https://x.com/mujisoketsu" target="_blank" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-zinc-700 text-gray-500 hover:text-black dark:hover:text-white transition-colors">
+                    <img src="assets/icons/x.svg" class="social-icon opacity-70 dark:invert" alt="X">
+                    <span class="text-xs">X</span>
+                </a>
+
+                <!-- GitHub -->
+                <a href="https://github.com/WUZICANGJIE" target="_blank" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-zinc-700 text-gray-500 hover:text-black dark:hover:text-white transition-colors">
+                    <img src="assets/icons/github.svg" class="social-icon opacity-70 dark:invert" alt="GitHub">
+                    <span class="text-xs">GitHub</span>
+                </a>
+
+                <!-- Email -->
+                <a href="mailto:wuzi.ssh@gmail.com" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 text-gray-500 hover:text-red-500 transition-colors">
+                    <img src="assets/icons/gmail.svg" class="social-icon opacity-70 dark:invert" alt="Email">
+                    <span class="text-xs">Email</span>
+                </a>
+            </div>
+
+        </div>
+        
+        <footer class="mt-8 text-center text-xs text-gray-400 dark:text-gray-600 animate-fade-in opacity-0 delay-300">
+            <p id="footer-text">&copy; 2025 wuzicangjie. All Rights Reserved.</p>
+        </footer>
+
+    </main>
+
+    <script>
+    // Use IIFE to avoid global variable pollution and redeclaration errors
+    (() => {
+        // --- 1. Language Data Definition ---
+        const i18n = {
+            zh: {
+                name: "孙少瀚",
+                bio: "Econ student. Homelab/投资/音游",
+                saveContact: "添加联系人",
+                footer: "© 2025 无字仓颉. All Rights Reserved."
+            },
+            en: {
+                name: "Shaohan Sun",
+                bio: "Econ student. Homelab/Investment/Rhythm Games",
+                saveContact: "Save Contact",
+                footer: "© 2025 wuzicangjie. All Rights Reserved."
+            },
+            ja: {
+                name: "孫少瀚",
+                bio: "Econ student. 自宅サーバー・投資・音ゲー",
+                saveContact: "連絡先を追加",
+                footer: "© 2025 無字倉頡. All Rights Reserved."
+            }
+        };
+        
+        // --- 2. VCF Template Data ---
+        const vcfData = {
+            en: `BEGIN:VCARD
+VERSION:3.0
+FN:Shaohan Sun
+N:Sun;Shaohan;;;
+X-PHONETIC-LAST-NAME:Sun
+X-PHONETIC-FIRST-NAME:Shaohan
+TEL;TYPE=CELL:+86 132 2425 0236
+TEL;TYPE=CELL:+81 80-7382-0454
+EMAIL;TYPE=INTERNET,HOME,PREF:wuzi.ssh@gmail.com
+EMAIL;TYPE=INTERNET,HOME:sysunshaohan@outlook.com
+EMAIL;TYPE=INTERNET,WORK:sunshaohan@akane.waseda.jp
+BDAY:20000815
+END:VCARD`,
+            ja: `BEGIN:VCARD
+VERSION:3.0
+FN:孫少瀚
+N:孫;少瀚;;;
+X-PHONETIC-FIRST-NAME:ショウハン
+X-PHONETIC-LAST-NAME:ソン
+TEL;TYPE=CELL:+81 80-7382-0454
+EMAIL;TYPE=INTERNET,HOME,PREF:wuzi.ssh@gmail.com
+EMAIL;TYPE=INTERNET,HOME:sysunshaohan@outlook.com
+EMAIL;TYPE=INTERNET,WORK:sunshaohan@akane.waseda.jp
+BDAY:20000815
+END:VCARD`,
+            zh: `BEGIN:VCARD
+VERSION:3.0
+FN:孙少瀚
+N:孙;少瀚;;;
+X-PHONETIC-LAST-NAME:Sun
+X-PHONETIC-FIRST-NAME:Shaohan
+TEL;TYPE=CELL:+86 132 2425 0236
+TEL;TYPE=CELL:+81 80-7382-0454
+EMAIL;TYPE=INTERNET,HOME,PREF:wuzi.ssh@gmail.com
+EMAIL;TYPE=INTERNET,HOME:sysunshaohan@outlook.com
+EMAIL;TYPE=INTERNET,WORK:sunshaohan@akane.waseda.jp
+BDAY:20000815
+END:VCARD`
+        };
+
+        // --- 3. Auto-detect Language ---
+        let currentLang = 'en'; // Default fallback language
+        const userLang = navigator.language || navigator.userLanguage; 
+        
+        if (userLang.startsWith('zh')) {
+            currentLang = 'zh';
+        } else if (userLang.startsWith('ja')) {
+            currentLang = 'ja';
+        }
+
+        // Use local variable to avoid global conflict
+        const t = i18n[currentLang];
+
+        // --- 4. Update Page Text ---
+        document.getElementById('profile-name').innerText = t.name;
+        document.getElementById('profile-bio').innerText = t.bio;
+        document.getElementById('btn-save-contact').innerText = t.saveContact;
+        document.getElementById('footer-text').innerText = t.footer;
+        document.title = `${t.name} | Link in Bio`;
+
+        // --- 5. Generate and Download VCF Function ---
+        // Mount function to window object for HTML onclick access
+        window.downloadVcf = function() {
+            // Get base VCF data for corresponding language
+            let vcfContent = vcfData[currentLang] || vcfData.en;
+            
+            const blob = new Blob([vcfContent], { type: "text/vcard;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `${t.name}.vcf`; 
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+
+        // Console Log Egg
+        console.log(
+            `%c ${t.name} %c https://me.wuzicangjie.com/ `,
+            "color: white; background: #3b82f6; padding: 5px 10px; border-radius: 5px 0 0 5px;",
+            "background: #1f2937; color: #fff; padding: 5px 10px; border-radius: 0 5px 5px 0;"
+        );
+    })();
+    </script>
+</body>
+</html>
