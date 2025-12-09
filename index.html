@@ -64,8 +64,15 @@
 
     <main class="w-full max-w-md mx-auto">
         
-        <div class="glass-card rounded-3xl shadow-xl border border-white/20 dark:border-white/10 p-8 text-center animate-fade-in opacity-0">
+        <div class="glass-card relative rounded-3xl shadow-xl border border-white/20 dark:border-white/10 p-8 text-center animate-fade-in opacity-0">
             
+            <!-- Language Switcher -->
+            <div class="absolute top-4 right-4 flex gap-3">
+                <button onclick="switchLanguage('zh')" data-lang="zh" class="lang-btn text-xs font-medium text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">CN</button>
+                <button onclick="switchLanguage('en')" data-lang="en" class="lang-btn text-xs font-medium text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">EN</button>
+                <button onclick="switchLanguage('ja')" data-lang="ja" class="lang-btn text-xs font-medium text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">JP</button>
+            </div>
+
             <!-- Avatar -->
             <div class="relative mb-6 inline-block group">
                 <div class="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
@@ -206,29 +213,52 @@ BDAY:20000815
 END:VCARD`
         };
 
-        // --- 3. Auto-detect Language ---
-        let currentLang = 'en'; // Default fallback language
+        // --- 3. State Management ---
+        let currentLang = 'en'; // Default fallback
+
+        // --- 4. Update Function ---
+        function updateLanguage(lang) {
+            if (!i18n[lang]) return;
+            currentLang = lang;
+            const t = i18n[lang];
+
+            // Update Text
+            document.title = t.title;
+            document.documentElement.lang = lang;
+            document.getElementById('profile-name').innerText = t.name;
+            document.getElementById('profile-bio').innerText = t.bio;
+            document.getElementById('btn-save-contact').innerText = t.saveContact;
+            document.getElementById('footer-text').innerText = t.footer;
+
+            // Update Buttons State
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.dataset.lang === lang) {
+                    btn.classList.remove('text-gray-400');
+                    btn.classList.add('text-gray-800', 'dark:text-white', 'font-bold');
+                } else {
+                    btn.classList.add('text-gray-400');
+                    btn.classList.remove('text-gray-800', 'dark:text-white', 'font-bold');
+                }
+            });
+        }
+
+        // --- 5. Initialization ---
+        // Detect language
         const userLang = navigator.language || navigator.userLanguage; 
-        
         if (userLang.startsWith('zh')) {
             currentLang = 'zh';
         } else if (userLang.startsWith('ja')) {
             currentLang = 'ja';
         }
+        
+        // Apply initial language
+        updateLanguage(currentLang);
 
-        // Use local variable to avoid global conflict
-        const t = i18n[currentLang];
+        // --- 6. Global Functions ---
+        window.switchLanguage = function(lang) {
+            updateLanguage(lang);
+        };
 
-        // --- 4. Update Page Text ---
-        document.title = t.title;
-        document.documentElement.lang = currentLang;
-        document.getElementById('profile-name').innerText = t.name;
-        document.getElementById('profile-bio').innerText = t.bio;
-        document.getElementById('btn-save-contact').innerText = t.saveContact;
-        document.getElementById('footer-text').innerText = t.footer;
-
-        // --- 5. Generate and Download VCF Function ---
-        // Mount function to window object for HTML onclick access
         window.downloadVcf = function() {
             // Get base VCF data for corresponding language
             let vcfContent = vcfData[currentLang] || vcfData.en;
@@ -238,7 +268,7 @@ END:VCARD`
             
             const link = document.createElement("a");
             link.href = url;
-            link.download = `${t.name}.vcf`; 
+            link.download = `${i18n[currentLang].name}.vcf`; 
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
