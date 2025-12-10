@@ -43,6 +43,14 @@
             height: 1.75rem; /* h-7 equivalent */
             margin-bottom: 0.25rem; /* mb-1 equivalent */
         }
+
+        /* Prevent image saving/dragging */
+        img {
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -webkit-touch-callout: none;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 dark:bg-zinc-900 dark:text-gray-200 min-h-[100dvh] flex flex-col justify-center items-center p-4 font-sans transition-colors duration-300">
