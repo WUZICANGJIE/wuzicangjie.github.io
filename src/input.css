@@ -15,10 +15,6 @@
       transform: none;
     }
   }
-  .anim-delay-100 { animation-delay: 0.1s; }
-  .anim-delay-200 { animation-delay: 0.2s; }
-  .anim-delay-300 { animation-delay: 0.3s; }
-  .anim-delay-400 { animation-delay: 0.4s; }
 }
 
 @layer components {
