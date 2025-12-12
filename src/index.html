@@ -86,7 +86,7 @@
             </div>
 
             <!-- Avatar -->
-            <div class="relative mb-6 inline-block group animate-fade-in">
+            <div class="relative mb-6 inline-block group">
                 <div class="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
                 <img 
                     src="assets/images/avatar.webp"  
@@ -99,7 +99,7 @@
             </div>
 
             <!-- Title and Bio (with ID for JS update) -->
-            <div class="animate-fade-in [animation-delay:100ms]">
+            <div>
                 <h1 id="profile-name" class="text-2xl font-bold mb-2 tracking-tight">Shaohan Sun</h1>
                 <p id="profile-bio" class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed whitespace-pre-line">
                     Econ student.
@@ -108,13 +108,13 @@
             </div>
 
             <!-- Add Contact Button -->
-            <button onclick="downloadVcf()" class="mb-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 motion-reduce:transform-none flex items-center justify-center gap-2 animate-fade-in [animation-delay:200ms]">
+            <button onclick="downloadVcf()" class="mb-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 motion-reduce:transform-none flex items-center justify-center gap-2">
                 <img src="assets/icons/contact.svg" width="20" height="20" class="w-5 h-5 brightness-0 invert" alt="Contact">
                 <span id="btn-save-contact">Save Contact</span>
             </button>
 
             <!-- Social Icon Matrix (3-column grid) -->
-            <div class="grid grid-cols-3 gap-4 animate-fade-in [animation-delay:300ms]">
+            <div class="grid grid-cols-3 gap-4">
                 <!-- Line -->
                 <a href="https://line.me/ti/p/mQdP8ETk4a" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-green-50 dark:hover:bg-green-900/20 text-gray-600 dark:text-gray-400 hover:text-[#00B900] transition-colors">
                     <div class="social-icon opacity-70" style="-webkit-mask-image: url('assets/icons/line.svg'); mask-image: url('assets/icons/line.svg');"></div>
@@ -154,7 +154,7 @@
 
         </div>
         
-        <footer class="mt-8 text-center text-xs text-gray-600 dark:text-gray-400 animate-fade-in [animation-delay:400ms]">
+        <footer class="mt-8 text-center text-xs text-gray-600 dark:text-gray-400">
             <p id="footer-text">&copy; 2025 wuzicangjie.</p>
         </footer>
 
@@ -169,22 +169,19 @@
                 title: "孙少瀚 (無字倉頡)",
                 name: "孙少瀚",
                 bio: "Econ student.\nHomelab/投资/音游",
-                saveContact: "添加联系人",
-                footer: "© 2025 无字仓颉."
+                saveContact: "添加联系人"
             },
             en: {
                 title: "Shaohan Sun (無字倉頡)",
                 name: "Shaohan Sun",
                 bio: "Econ student.\nHomelab/Investing/Rhythm Games",
-                saveContact: "Save Contact",
-                footer: "© 2025 wuzicangjie."
+                saveContact: "Save Contact"
             },
             ja: {
                 title: "孫少瀚 (無字倉頡)",
                 name: "孫少瀚",
                 bio: "Econ student.\n自宅サーバー・投資・音ゲー",
-                saveContact: "連絡先を追加",
-                footer: "© 2025 無字倉頡."
+                saveContact: "連絡先を追加"
             }
         };
         
@@ -245,7 +242,6 @@ END:VCARD`
             document.getElementById('profile-name').innerText = t.name;
             document.getElementById('profile-bio').innerText = t.bio;
             document.getElementById('btn-save-contact').innerText = t.saveContact;
-            document.getElementById('footer-text').innerText = t.footer;
 
             // Update Menu Items State
             document.querySelectorAll('.lang-item').forEach(item => {
