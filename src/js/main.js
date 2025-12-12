@@ -120,6 +120,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 // Normalize path to compare only the first segment with the prefix map.
                 const [, firstSegment = ''] = pathOnly.replace(/^\/+/, '/').split('/');
                 const normalizedSegment = firstSegment ? `${firstSegment}/` : '';
+                // Match the first path segment against known prefixes, defaulting to English
                 return LANG_PREFIX_MAP[normalizedSegment] ?? 'en';
             };
 
@@ -175,7 +176,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 replayAnimation(domRefs.contactText);
                 replayAnimation(domRefs.contactIcon);
 
-                langLinks.forEach(link => {
+                langLinks.forEach((link) => {
                     const linkLang = getLangFromLink(link);
                     const method = linkLang === lang ? 'add' : 'remove';
                     link.classList[method]('bg-gray-50', 'dark:bg-zinc-700/50', 'font-bold');
@@ -185,7 +186,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
             };
 
             if (window.I18N) {
-                langLinks.forEach(link => {
+                langLinks.forEach((link) => {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
                         const href = link.getAttribute('href');
