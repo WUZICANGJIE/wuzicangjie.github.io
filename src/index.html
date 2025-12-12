@@ -64,7 +64,7 @@
             <!-- Language Switcher (Dropdown) -->
             <div class="absolute top-4 right-4 inline-block text-left z-50">
                 <button id="lang-menu-btn" aria-label="Select Language" aria-haspopup="true" aria-expanded="false" aria-controls="lang-menu" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
-                    <img src="assets/icons/language.svg" width="24" height="24" class="w-6 h-6 opacity-60 dark:invert" alt="" aria-hidden="true">
+                    <img src="assets/icons/language.svg" width="24" height="24" class="w-6 h-6 opacity-60 dark:invert" alt="" aria-hidden="true" fetchpriority="high">
                 </button>
                 
                 <!-- Dropdown Menu -->
@@ -84,21 +84,20 @@
             </div>
 
             <!-- Avatar -->
-            <div class="relative mb-6 inline-block group">
+            <div class="relative mb-6 inline-block group animate-fade-in">
                 <div class="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
                 <img 
                     src="assets/images/avatar.webp"  
                     alt="Avatar" 
                     width="112"
                     height="112"
-                    fetchpriority="high"
                     class="relative w-28 h-28 rounded-full border-4 border-white dark:border-zinc-800 shadow-lg object-cover mx-auto transform transition duration-500 hover:scale-105 motion-reduce:transform-none"
                     onerror="this.src='https://ui-avatars.com/api/?name=Wu+Zi&background=random'"
                 >
             </div>
 
             <!-- Title and Bio (with ID for JS update) -->
-            <div>
+            <div class="animate-fade-in [animation-delay:100ms]">
                 <h1 id="profile-name" class="text-2xl font-bold mb-2 tracking-tight">Shaohan Sun</h1>
                 <p id="profile-bio" class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">
                     Econ student.<br>Homelab/Investing/Rhythm Games
@@ -106,13 +105,13 @@
             </div>
 
             <!-- Add Contact Button -->
-            <button onclick="downloadVcf()" class="mb-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 motion-reduce:transform-none flex items-center justify-center gap-2">
+            <button onclick="downloadVcf()" class="mb-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 motion-reduce:transform-none flex items-center justify-center gap-2 animate-fade-in [animation-delay:200ms]">
                 <img src="assets/icons/contact.svg" width="20" height="20" class="w-5 h-5 brightness-0 invert" alt="Contact">
                 <span id="btn-save-contact">Save Contact</span>
             </button>
 
             <!-- Social Icon Matrix (3-column grid) -->
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-3 gap-4 animate-fade-in [animation-delay:300ms]">
                 <!-- Line -->
                 <a href="https://line.me/ti/p/mQdP8ETk4a" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-green-50 dark:hover:bg-green-900/20 text-gray-600 dark:text-gray-400 hover:text-[#00B900] transition-colors">
                     <div class="social-icon opacity-70" style="-webkit-mask-image: url('assets/icons/line.svg'); mask-image: url('assets/icons/line.svg');"></div>
@@ -152,7 +151,7 @@
 
         </div>
         
-        <footer class="mt-8 text-center text-xs text-gray-600 dark:text-gray-400">
+        <footer class="mt-8 text-center text-xs text-gray-600 dark:text-gray-400 animate-fade-in [animation-delay:400ms]">
             <p id="footer-text">&copy; 2025 wuzicangjie.</p>
         </footer>
 
