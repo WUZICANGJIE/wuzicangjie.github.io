@@ -77,3 +77,9 @@
     -webkit-touch-callout: none;
   }
 }
+
+@layer base {
+  @view-transition {
+    navigation: auto;
+  }
+}

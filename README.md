@@ -5,6 +5,7 @@ Source code for my personal website, hosted on GitHub Pages.
 ## Features
 
 - **Multi-language**: English, Chinese, Japanese (SSG).
+- **UX**: Native View Transitions for smooth page navigation.
 - **SEO & Performance**: Static HTML generation, minified assets, strict CSP.
 - **Tech Stack**: Tailwind CSS v4, EJS, Node.js Build Script.
 - **Automated VCF**: vCard files are automatically generated from configuration.
@@ -12,14 +13,13 @@ Source code for my personal website, hosted on GitHub Pages.
 ## Structure
 
 - `src/`
-  - `data/`
-    - `site.js`: Global site configuration (social links, base URL).
-    - `i18n.js`: Translations and vCard profiles.
-  - `index.ejs`: Main HTML template.
+  - `data/`: Configuration (site info, translations, vCard).
+  - `public/`: Static root files (robots.txt, CNAME, favicons).
   - `css/`: Tailwind CSS input.
   - `js/`: Client-side JavaScript.
-- `assets/`: Static assets (images, icons) and compiled resources.
-- `scripts/`: Build scripts (`build.js`).
+  - `index.ejs`: Main HTML template.
+- `assets/`: Static assets (images, icons).
+- `scripts/`: Build scripts.
 - `dist/`: Production build output.
 
 ## Configuration

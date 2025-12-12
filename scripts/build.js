@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs/promises');
 const path = require('path');
 const { minify } = require('html-minifier-terser');
 const ejs = require('ejs');
@@ -7,6 +7,7 @@ const site = require('../src/data/site');
 
 const rootDir = path.resolve(__dirname, '..');
 const srcDir = path.join(rootDir, 'src');
+const publicDir = path.join(srcDir, 'public');
 const distDir = path.join(rootDir, 'dist');
 const assetsDir = path.join(rootDir, 'assets');
 
@@ -16,21 +17,6 @@ const minifyOptions = {
     minifyCSS: true,
     minifyJS: true
 };
-
-// Files to copy to root of dist
-const rootFiles = [
-    'robots.txt',
-    'sitemap.xml',
-    'site.webmanifest',
-    'CNAME',
-    '.nojekyll',
-    'favicon.ico',
-    'favicon.svg',
-    'favicon-96x96.png',
-    'apple-touch-icon.png',
-    'web-app-manifest-192x192.png',
-    'web-app-manifest-512x512.png'
-];
 
 function generateVcf(lang) {
     const profile = vcfProfiles[lang];
@@ -68,57 +54,52 @@ function generateVcf(lang) {
 }
 
 async function build() {
+    console.time('Build time');
     console.log('Starting build...');
 
     // 1. Clean & Create dist
-    if (fs.existsSync(distDir)) {
-        fs.rmSync(distDir, { recursive: true, force: true });
-    }
-    fs.mkdirSync(distDir);
-    console.log('Cleaned dist directory.');
+    await fs.rm(distDir, { recursive: true, force: true });
+    await fs.mkdir(distDir, { recursive: true });
 
-    // 2. Copy Assets
+    // 2. Copy Assets (CSS/JS/Images)
     const distAssets = path.join(distDir, 'assets');
-    fs.cpSync(assetsDir, distAssets, { recursive: true });
-    console.log('Copied assets.');
-
-    // 3. Copy Root Files
-    for (const file of rootFiles) {
-        const src = path.join(rootDir, file);
-        if (fs.existsSync(src)) {
-            fs.cpSync(src, path.join(distDir, file));
-            console.log(`Copied ${file}`);
-        }
+    await fs.cp(assetsDir, distAssets, { recursive: true });
+    
+    // 3. Copy Public Files (Root files like robots.txt, CNAME)
+    try {
+        await fs.cp(publicDir, distDir, { recursive: true });
+        console.log('Copied public files.');
+    } catch (err) {
+        console.warn('No public directory found or empty.');
     }
 
     // 4. Generate HTML & VCF
     const templatePath = path.join(srcDir, 'index.ejs');
-    const template = fs.readFileSync(templatePath, 'utf8');
+    const template = await fs.readFile(templatePath, 'utf8');
     const currentYear = new Date().getFullYear();
+    const version = Date.now();
 
     const languages = Object.keys(i18n);
 
-    for (const lang of languages) {
+    await Promise.all(languages.map(async (lang) => {
         const t = i18n[lang];
         const isDefault = lang === 'en';
         
         const siteUrl = site.siteUrl;
         const langUrl = isDefault ? siteUrl : `${siteUrl}${lang}/`;
         
-        // VCF Filename
-        const vcfFilename = `${lang}.vcf`; // e.g., en.vcf, zh.vcf
+        // VCF Generation
+        const vcfFilename = `${lang}.vcf`;
         const vcfPath = path.join(distDir, vcfFilename);
-        
-        // Write VCF
         const vcfContent = generateVcf(lang);
+        
         if (vcfContent) {
-            fs.writeFileSync(vcfPath, vcfContent);
-            console.log(`Generated ${vcfFilename}`);
+            await fs.writeFile(vcfPath, vcfContent);
         }
 
-        // Prepare Data for Template
+        // Prepare Data
         const data = {
-            lang: lang,
+            lang,
             title: t.title,
             description: t.description,
             name: t.name,
@@ -127,33 +108,28 @@ async function build() {
             url: langUrl,
             vcfLink: `${site.baseUrl}${vcfFilename}`,
             socialLinks: site.socialLinks,
-            site: site,
-            languages: languages,
+            site,
+            languages,
             year: currentYear,
-            version: Date.now()
+            version
         };
 
-        // Render HTML
+        // Render & Minify
         const html = ejs.render(template, data);
         const minified = await minify(html, minifyOptions);
 
-        // Output Path
-        let outputPath;
-        if (isDefault) {
-            outputPath = path.join(distDir, 'index.html');
-        } else {
-            const langDir = path.join(distDir, lang);
-            if (!fs.existsSync(langDir)) {
-                fs.mkdirSync(langDir, { recursive: true });
-            }
-            outputPath = path.join(langDir, 'index.html');
+        // Output
+        const outputDir = isDefault ? distDir : path.join(distDir, lang);
+        if (!isDefault) {
+            await fs.mkdir(outputDir, { recursive: true });
         }
-
-        fs.writeFileSync(outputPath, minified);
-        console.log(`Generated HTML for ${lang} -> ${outputPath}`);
-    }
+        
+        await fs.writeFile(path.join(outputDir, 'index.html'), minified);
+        console.log(`Generated ${lang} -> ${isDefault ? '/' : '/' + lang + '/'}`);
+    }));
 
     console.log('Build complete!');
+    console.timeEnd('Build time');
 }
 
 build().catch(err => {
