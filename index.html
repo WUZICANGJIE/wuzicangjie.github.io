@@ -97,7 +97,7 @@
 
     <main class="w-full max-w-md mx-auto">
         
-        <div class="glass-card relative rounded-3xl shadow-xl border border-white/20 dark:border-white/10 p-8 text-center animate-fade-in">
+        <div class="glass-card relative rounded-3xl shadow-xl border border-white/20 dark:border-white/10 p-8 text-center">
             
             <!-- Language Switcher (Dropdown) -->
             <div class="absolute top-4 right-4 inline-block text-left z-50">
@@ -122,7 +122,7 @@
             </div>
 
             <!-- Avatar -->
-            <div class="relative mb-6 inline-block group">
+            <div class="relative mb-6 inline-block group animate-fade-in">
                 <div class="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
                 <img 
                     src="assets/images/avatar.webp" 
@@ -135,20 +135,22 @@
             </div>
 
             <!-- Title and Bio (with ID for JS update) -->
-            <h1 id="profile-name" class="text-2xl font-bold mb-2 tracking-tight">Shaohan Sun</h1>
-            <p id="profile-bio" class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed whitespace-pre-line">
-                Econ student.
-                Homelab/Investing/Rhythm Games
-            </p>
+            <div class="animate-fade-in delay-100">
+                <h1 id="profile-name" class="text-2xl font-bold mb-2 tracking-tight">Shaohan Sun</h1>
+                <p id="profile-bio" class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed whitespace-pre-line">
+                    Econ student.
+                    Homelab/Investing/Rhythm Games
+                </p>
+            </div>
 
             <!-- Add Contact Button -->
-            <button onclick="downloadVcf()" class="mb-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 animate-fade-in delay-100">
+            <button onclick="downloadVcf()" class="mb-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 animate-fade-in delay-200">
                 <img src="assets/icons/contact.svg" width="20" height="20" class="w-5 h-5 brightness-0 invert" alt="Contact">
                 <span id="btn-save-contact">Save Contact</span>
             </button>
 
             <!-- Social Icon Matrix (3-column grid) -->
-            <div class="grid grid-cols-3 gap-4 animate-fade-in delay-200">
+            <div class="grid grid-cols-3 gap-4 animate-fade-in delay-300">
                 <!-- Line -->
                 <a href="https://line.me/ti/p/mQdP8ETk4a" target="_blank" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-green-50 dark:hover:bg-green-900/20 text-gray-500 hover:text-[#00B900] transition-colors">
                     <img src="assets/icons/line.svg" width="28" height="28" class="social-icon opacity-70 dark:invert" alt="Line">
@@ -188,7 +190,7 @@
 
         </div>
         
-        <footer class="mt-8 text-center text-xs text-gray-400 dark:text-gray-600 animate-fade-in delay-300">
+        <footer class="mt-8 text-center text-xs text-gray-400 dark:text-gray-600 animate-fade-in delay-400">
             <p id="footer-text">&copy; 2025 wuzicangjie.</p>
         </footer>
 
