@@ -26,6 +26,9 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 zh: 'zh/',
                 ja: 'ja/'
             };
+            const LANG_PREFIX_MAP = Object.fromEntries(
+                Object.entries(LANG_CONFIG).map(([code, prefix]) => [prefix, code])
+            );
 
             const toggleMenu = (show) => {
                 const isHidden = menu.classList.contains('hidden');
@@ -116,8 +119,8 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 const pathOnly = path.startsWith('http') ? path.replace(/^https?:\/\/[^/]+/, '') : path;
                 const [, firstSegment = ''] = pathOnly.replace(/^\/+/, '/').split('/');
                 const normalizedSegment = firstSegment ? `${firstSegment}/` : '';
-                const entry = Object.entries(LANG_CONFIG).find(([, prefix]) => prefix === normalizedSegment);
-                return entry ? entry[0] : 'en';
+                // Match the first path segment against known prefixes, defaulting to English
+                return LANG_PREFIX_MAP[normalizedSegment] ?? 'en';
             };
 
             const getLangFromLink = (link) => {
@@ -172,7 +175,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 replayAnimation(domRefs.contactText);
                 replayAnimation(domRefs.contactIcon);
 
-                langLinks.forEach(link => {
+                langLinks.forEach((link) => {
                     const linkLang = getLangFromLink(link);
                     const method = linkLang === lang ? 'add' : 'remove';
                     link.classList[method]('bg-gray-50', 'dark:bg-zinc-700/50', 'font-bold');
@@ -181,11 +184,11 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 currentLang = lang;
             };
 
-                if (window.I18N && window.SITE_CONFIG) {
-                    langLinks.forEach(link => {
-                        link.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            const href = link.getAttribute('href');
+            if (window.I18N) {
+                langLinks.forEach((link) => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const href = link.getAttribute('href');
                         const lang = getLangFromLink(link);
                         updateContent(lang);
                         window.history.pushState({ lang }, '', href);
