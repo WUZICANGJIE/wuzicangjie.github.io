@@ -47,6 +47,6 @@ This is the source code for my personal website, hosted on GitHub Pages.
 
 This repository uses **GitHub Actions** to automatically build and deploy the website whenever changes are pushed to the `main` branch.
 
-- **Workflow file**: `.github/workflows/build-css.yml`
+- **Workflow file**: `.github/workflows/deploy.yml`
 - **Trigger**: Push to `main` branch.
 - **Action**: Installs dependencies, builds the project (minifies HTML & CSS), and deploys the artifacts to GitHub Pages.
