@@ -2,7 +2,7 @@
 <html lang="<%= lang %>">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' <%= site.baseUrl %>; img-src 'self' https://ui-avatars.com <%= site.baseUrl %> data:; script-src 'self' <%= site.baseUrl %>; style-src 'self' <%= site.baseUrl %>; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; require-trusted-types-for 'script';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://ui-avatars.com data:; script-src 'self'; style-src 'self'; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; require-trusted-types-for 'script';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -88,16 +88,16 @@
 
             <!-- Title and Bio -->
             <div class="animate-fade-in [animation-delay:100ms]">
-                <h1 class="text-2xl font-bold mb-2 tracking-tight"><%= name %></h1>
-                <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">
+                <h1 id="profile-name" class="text-2xl font-bold mb-2 tracking-tight transition-opacity duration-200"><%= name %></h1>
+                <p id="profile-bio" class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed transition-opacity duration-200">
                     <%- bio %>
                 </p>
             </div>
 
             <!-- Add Contact Button -->
-            <a href="<%= vcfLink %>" download class="mb-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 motion-reduce:transform-none flex items-center justify-center gap-2 animate-fade-in [animation-delay:200ms]">
-                <img src="<%= site.baseUrl %>assets/icons/contact.svg" width="20" height="20" class="w-5 h-5 brightness-0 invert" alt="Contact">
-                <span><%= saveContact %></span>
+            <a id="contact-btn" href="<%= vcfLink %>" download class="mb-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 motion-reduce:transform-none flex items-center justify-center gap-2 animate-fade-in [animation-delay:200ms]">
+                <img id="contact-icon" src="<%= site.baseUrl %>assets/icons/contact.svg" width="20" height="20" class="w-5 h-5 brightness-0 invert transition-opacity duration-200" alt="Contact">
+                <span id="contact-text" class="transition-opacity duration-200"><%= saveContact %></span>
             </a>
 
             <!-- Social Icon Matrix (3-column grid) -->
