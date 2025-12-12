@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://ui-avatars.com data:; script-src 'self'; style-src 'self'; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; require-trusted-types-for 'script';">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Primary Meta Tags -->
@@ -73,13 +75,13 @@
                 <!-- Dropdown Menu -->
                 <div id="lang-menu" role="menu" aria-orientation="vertical" aria-labelledby="lang-menu-btn" class="hidden absolute right-0 mt-2 w-32 rounded-xl bg-white dark:bg-zinc-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden transform origin-top-right transition-all duration-200">
                     <div class="py-1" role="none">
-                        <button onclick="switchLanguage('zh')" role="menuitem" class="lang-item w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2" data-lang="zh">
+                        <button role="menuitem" class="lang-item w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2" data-lang="zh">
                             <span class="w-4 text-center">🇨🇳</span> 中文
                         </button>
-                        <button onclick="switchLanguage('en')" role="menuitem" class="lang-item w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2" data-lang="en">
+                        <button role="menuitem" class="lang-item w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2" data-lang="en">
                             <span class="w-4 text-center">🇺🇸</span> English
                         </button>
-                        <button onclick="switchLanguage('ja')" role="menuitem" class="lang-item w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2" data-lang="ja">
+                        <button role="menuitem" class="lang-item w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2" data-lang="ja">
                             <span class="w-4 text-center">🇯🇵</span> 日本語
                         </button>
                     </div>
@@ -95,7 +97,6 @@
                     width="112"
                     height="112"
                     class="relative w-28 h-28 rounded-full border-4 border-white dark:border-zinc-800 shadow-lg object-cover mx-auto transform transition duration-500 hover:scale-105 motion-reduce:transform-none"
-                    onerror="this.src='https://ui-avatars.com/api/?name=Wu+Zi&background=random'"
                 >
             </div>
 
@@ -108,7 +109,7 @@
             </div>
 
             <!-- Add Contact Button -->
-            <button onclick="downloadVcf()" class="mb-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 motion-reduce:transform-none flex items-center justify-center gap-2 animate-fade-in [animation-delay:200ms]">
+            <button id="btn-download-vcf" class="mb-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-300 transform hover:-translate-y-0.5 motion-reduce:transform-none flex items-center justify-center gap-2 animate-fade-in [animation-delay:200ms]">
                 <img src="assets/icons/contact.svg" width="20" height="20" class="w-5 h-5 brightness-0 invert" alt="Contact">
                 <span id="btn-save-contact">Save Contact</span>
             </button>
@@ -117,37 +118,37 @@
             <div class="grid grid-cols-3 gap-4 animate-fade-in [animation-delay:300ms]">
                 <!-- Line -->
                 <a href="https://line.me/ti/p/mQdP8ETk4a" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-green-50 dark:hover:bg-green-900/20 text-gray-600 dark:text-gray-400 hover:text-[#00B900] transition-colors">
-                    <div class="social-icon opacity-70" style="-webkit-mask-image: url('assets/icons/line.svg'); mask-image: url('assets/icons/line.svg');"></div>
+                    <div class="social-icon opacity-70 icon-line"></div>
                     <span class="text-xs">Line</span>
                 </a>
                 
                 <!-- Discord -->
                 <a href="https://discord.gg/aJeAmQ66" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-900/20 text-gray-600 dark:text-gray-400 hover:text-[#5865F2] transition-colors">
-                    <div class="social-icon opacity-70" style="-webkit-mask-image: url('assets/icons/discord.svg'); mask-image: url('assets/icons/discord.svg');"></div>
+                    <div class="social-icon opacity-70 icon-discord"></div>
                     <span class="text-xs">Discord</span>
                 </a>
 
                 <!-- Telegram -->
                 <a href="https://t.me/wuzicangjie" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-sky-50 dark:hover:bg-sky-900/20 text-gray-600 dark:text-gray-400 hover:text-[#0088cc] transition-colors">
-                    <div class="social-icon opacity-70" style="-webkit-mask-image: url('assets/icons/telegram.svg'); mask-image: url('assets/icons/telegram.svg');"></div>
+                    <div class="social-icon opacity-70 icon-telegram"></div>
                     <span class="text-xs">Telegram</span>
                 </a>
 
                 <!-- X -->
                 <a href="https://x.com/mujisoketsu" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-zinc-700 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
-                    <div class="social-icon opacity-70" style="-webkit-mask-image: url('assets/icons/x.svg'); mask-image: url('assets/icons/x.svg');"></div>
+                    <div class="social-icon opacity-70 icon-x"></div>
                     <span class="text-xs">X</span>
                 </a>
 
                 <!-- GitHub -->
                 <a href="https://github.com/WUZICANGJIE" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-zinc-700 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
-                    <div class="social-icon opacity-70" style="-webkit-mask-image: url('assets/icons/github.svg'); mask-image: url('assets/icons/github.svg');"></div>
+                    <div class="social-icon opacity-70 icon-github"></div>
                     <span class="text-xs">GitHub</span>
                 </a>
 
                 <!-- Email -->
                 <a href="mailto:wuzi.ssh@gmail.com" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors">
-                    <div class="social-icon opacity-70" style="-webkit-mask-image: url('assets/icons/gmail.svg'); mask-image: url('assets/icons/gmail.svg');"></div>
+                    <div class="social-icon opacity-70 icon-gmail"></div>
                     <span class="text-xs">Email</span>
                 </a>
             </div>
@@ -160,178 +161,6 @@
 
     </main>
 
-    <script>
-    // Use IIFE to avoid global variable pollution and redeclaration errors
-    (() => {
-        // --- 1. Language Data Definition ---
-        const i18n = {
-            zh: {
-                title: "孙少瀚 (無字倉頡)",
-                name: "孙少瀚",
-                bio: "Econ student.<br>Homelab/投资/音游",
-                saveContact: "添加联系人"
-            },
-            en: {
-                title: "Shaohan Sun (無字倉頡)",
-                name: "Shaohan Sun",
-                bio: "Econ student.<br>Homelab/Investing/Rhythm Games",
-                saveContact: "Save Contact"
-            },
-            ja: {
-                title: "孫少瀚 (無字倉頡)",
-                name: "孫少瀚",
-                bio: "Econ student.<br>自宅サーバー・投資・音ゲー",
-                saveContact: "連絡先を追加"
-            }
-        };
-        
-        // --- 2. VCF Template Data ---
-        const vcfData = {
-            en: `BEGIN:VCARD
-VERSION:3.0
-FN:Shaohan Sun
-N:Sun;Shaohan;;;
-X-PHONETIC-LAST-NAME:Sun
-X-PHONETIC-FIRST-NAME:Shaohan
-TEL;TYPE=CELL:+86 132 2425 0236
-TEL;TYPE=CELL:+81 80-7382-0454
-EMAIL;TYPE=INTERNET,HOME,PREF:wuzi.ssh@gmail.com
-EMAIL;TYPE=INTERNET,HOME:sysunshaohan@outlook.com
-EMAIL;TYPE=INTERNET,WORK:sunshaohan@akane.waseda.jp
-BDAY:20000815
-END:VCARD`,
-            ja: `BEGIN:VCARD
-VERSION:3.0
-FN:孫少瀚
-N:孫;少瀚;;;
-X-PHONETIC-FIRST-NAME:ショウハン
-X-PHONETIC-LAST-NAME:ソン
-TEL;TYPE=CELL:+81 80-7382-0454
-EMAIL;TYPE=INTERNET,HOME,PREF:wuzi.ssh@gmail.com
-EMAIL;TYPE=INTERNET,HOME:sysunshaohan@outlook.com
-EMAIL;TYPE=INTERNET,WORK:sunshaohan@akane.waseda.jp
-BDAY:20000815
-END:VCARD`,
-            zh: `BEGIN:VCARD
-VERSION:3.0
-FN:孙少瀚
-N:孙;少瀚;;;
-X-PHONETIC-LAST-NAME:Sun
-X-PHONETIC-FIRST-NAME:Shaohan
-TEL;TYPE=CELL:+86 132 2425 0236
-TEL;TYPE=CELL:+81 80-7382-0454
-EMAIL;TYPE=INTERNET,HOME,PREF:wuzi.ssh@gmail.com
-EMAIL;TYPE=INTERNET,HOME:sysunshaohan@outlook.com
-EMAIL;TYPE=INTERNET,WORK:sunshaohan@akane.waseda.jp
-BDAY:20000815
-END:VCARD`
-        };
-
-        // --- 3. State Management ---
-        let currentLang = 'en'; // Default fallback
-
-        // --- 4. Update Function ---
-        function updateLanguage(lang) {
-            if (!i18n[lang]) return;
-            currentLang = lang;
-            const t = i18n[lang];
-
-            // Update Text
-            document.title = t.title;
-            document.documentElement.lang = lang;
-            document.getElementById('profile-name').innerText = t.name;
-            document.getElementById('profile-bio').innerHTML = t.bio;
-            document.getElementById('btn-save-contact').innerText = t.saveContact;
-
-            // Update Menu Items State
-            document.querySelectorAll('.lang-item').forEach(item => {
-                if (item.dataset.lang === lang) {
-                    item.classList.add('bg-gray-50', 'dark:bg-zinc-700/50', 'font-bold');
-                } else {
-                    item.classList.remove('bg-gray-50', 'dark:bg-zinc-700/50', 'font-bold');
-                }
-            });
-
-            // Close menu if open
-            const menu = document.getElementById('lang-menu');
-            const menuBtn = document.getElementById('lang-menu-btn');
-            if (menu && !menu.classList.contains('hidden')) {
-                menu.classList.add('hidden');
-                if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
-            }
-        }
-
-        // --- 5. Initialization ---
-        // Detect language
-        const userLang = navigator.language || navigator.userLanguage; 
-        if (userLang.startsWith('zh')) {
-            currentLang = 'zh';
-        } else if (userLang.startsWith('ja')) {
-            currentLang = 'ja';
-        }
-        
-        // Apply initial language
-        updateLanguage(currentLang);
-
-        // --- 6. Global Functions ---
-        window.switchLanguage = function(lang) {
-            updateLanguage(lang);
-        };
-
-        window.downloadVcf = function() {
-            // Get base VCF data for corresponding language
-            let vcfContent = vcfData[currentLang] || vcfData.en;
-            
-            const blob = new Blob([vcfContent], { type: "text/vcard;charset=utf-8" });
-            const url = URL.createObjectURL(blob);
-            
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = `${i18n[currentLang].name}.vcf`; 
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-        };
-
-        // --- 7. Dropdown Logic ---
-        const menuBtn = document.getElementById('lang-menu-btn');
-        const menu = document.getElementById('lang-menu');
-
-        if (menuBtn && menu) {
-            const toggleMenu = (show) => {
-                const isHidden = menu.classList.contains('hidden');
-                if (show === undefined) show = isHidden;
-                
-                if (show) {
-                    menu.classList.remove('hidden');
-                    menuBtn.setAttribute('aria-expanded', 'true');
-                } else {
-                    menu.classList.add('hidden');
-                    menuBtn.setAttribute('aria-expanded', 'false');
-                }
-            };
-
-            menuBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleMenu();
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!menu.contains(e.target) && !menuBtn.contains(e.target)) {
-                    toggleMenu(false);
-                }
-            });
-
-            // Keyboard navigation
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && !menu.classList.contains('hidden')) {
-                    toggleMenu(false);
-                    menuBtn.focus();
-                }
-            });
-        }
-    })();
-    </script>
+    <script src="assets/js/main.js" defer></script>
 </body>
 </html>

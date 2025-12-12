@@ -42,6 +42,31 @@
     -webkit-mask-size: contain;
     mask-size: contain;
   }
+
+  .icon-line {
+    -webkit-mask-image: url('../icons/line.svg');
+    mask-image: url('../icons/line.svg');
+  }
+  .icon-discord {
+    -webkit-mask-image: url('../icons/discord.svg');
+    mask-image: url('../icons/discord.svg');
+  }
+  .icon-telegram {
+    -webkit-mask-image: url('../icons/telegram.svg');
+    mask-image: url('../icons/telegram.svg');
+  }
+  .icon-x {
+    -webkit-mask-image: url('../icons/x.svg');
+    mask-image: url('../icons/x.svg');
+  }
+  .icon-github {
+    -webkit-mask-image: url('../icons/github.svg');
+    mask-image: url('../icons/github.svg');
+  }
+  .icon-gmail {
+    -webkit-mask-image: url('../icons/gmail.svg');
+    mask-image: url('../icons/gmail.svg');
+  }
 }
 
 @layer base {

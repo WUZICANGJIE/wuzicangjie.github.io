@@ -4,15 +4,22 @@ This is the source code for my personal website, hosted on GitHub Pages.
 
 ## Tech Stack
 
-- HTML5
 - [Tailwind CSS v4](https://tailwindcss.com/) (CLI)
 - [HTML Minifier](https://github.com/terser/html-minifier-terser)
+- [Terser](https://github.com/terser/terser) (JS Minifier)
 
 ## Project Structure
 
-- `src/`: Source code (HTML & CSS).
-- `index.html`: Generated minified HTML (Production).
-- `assets/css/style.css`: Generated minified CSS (Production).
+- `src/`: Source code.
+    - `html/`: (Root of src) HTML source.
+    - `css/`: CSS source (Tailwind input).
+    - `js/`: JavaScript source.
+- `assets/`: Compiled/Static assets.
+    - `css/`: Minified CSS.
+    - `js/`: Minified JavaScript.
+    - `images/`: Images.
+    - `icons/`: Icons.
+- `index.html`: Generated minified HTML (Production entry point).
 
 ## Development
 
