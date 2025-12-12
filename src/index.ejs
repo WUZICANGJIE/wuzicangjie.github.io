@@ -5,12 +5,13 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://ui-avatars.com data:; script-src 'self'; style-src 'self'; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; require-trusted-types-for 'script';">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- SEO: Hreflang Tags -->
     <% languages.forEach(l => { %>
     <link rel="alternate" hreflang="<%= l %>" href="<%= site.siteUrl %><%= l === 'en' ? '' : l + '/' %>" />
     <% }); %>
     <link rel="alternate" hreflang="x-default" href="<%= site.siteUrl %>" />
+    <link rel="canonical" href="<%= url %>" />
 
     <!-- Primary Meta Tags -->
     <title><%= title %></title>
