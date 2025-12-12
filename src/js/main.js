@@ -126,7 +126,11 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 return getLangFromPath(href);
             };
 
+            let currentLang = null;
+
             const updateContent = (lang) => {
+                if (!lang || lang === currentLang) return;
+
                 const data = window.I18N && window.I18N[lang];
                 if (!data) return;
 
@@ -173,6 +177,8 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                     const method = linkLang === lang ? 'add' : 'remove';
                     link.classList[method]('bg-gray-50', 'dark:bg-zinc-700/50', 'font-bold');
                 });
+
+                currentLang = lang;
             };
 
                 if (window.I18N && window.SITE_CONFIG) {
@@ -191,6 +197,9 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                     const lang = getLangFromPath(window.location.pathname);
                     updateContent(lang);
                 });
+
+                const initialLang = getLangFromPath();
+                updateContent(initialLang);
             }
         }
     });
