@@ -9,7 +9,12 @@ Source code for my personal website, hosted on GitHub Pages.
 - **Tech Stack**: Tailwind CSS v4, EJS, Node.js Build Script.
 - **Automated VCF**: vCard files are automatically generated from configuration.
 
-## Structure
+## Prerequisites
+
+- Node.js **18+** and npm.
+- Ensure `npm install` has been run before any build command (a local `node_modules/` folder is required).
+
+## Project Structure
 
 - `src/`
   - `data/`: Configuration (site info, translations, vCard).
@@ -19,24 +24,29 @@ Source code for my personal website, hosted on GitHub Pages.
   - `index.ejs`: Main HTML template.
 - `assets/`: Static assets (images, icons).
 - `scripts/`: Build scripts.
-- `dist/`: Production build output.
+- `dist/`: Production build output (generated).
 
 ## Configuration
 
 ### Content & Translations
-Edit `src/data/i18n.js` to update text content and vCard information for each language.
+Edit `src/data/i18n.js` to update text content and vCard information for each language. VCF files for each locale are generated automatically during the build.
 
-### Social Links
-Edit `src/data/site.js` to manage social media links, icons, and the `baseUrl` (critical for CSP and asset paths).
+### Social & Site Settings
+Edit `src/data/site.js` to manage social media links, icons, and the `baseUrl`/`siteUrl` values (critical for CSP and asset paths).
 
-## Development
+## Scripts
+
+Run these from the repository root after installing dependencies:
 
 ```bash
-npm install
-npm run watch   # Watch CSS
-npm run build   # Build for production (outputs to dist/)
-npx serve dist  # Preview
+npm run build:css  # Compile Tailwind CSS to assets/css/style.css (minified)
+npm run build:js   # Minify client JS to assets/js/main.js
+npm run build:html # Render & minify HTML into dist/
+npm run build      # Run all of the above in sequence
+npm run watch      # Watch Tailwind input.css and rebuild CSS on change
 ```
+
+To preview locally after a full build, serve the `dist/` folder (for example with `npx serve dist`).
 
 ## Deployment
 
