@@ -91,6 +91,16 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 setMeta('property', 'twitter:title', data.title);
                 setMeta('property', 'twitter:description', data.description);
 
+                if (window.SITE_CONFIG) {
+                    let path = '';
+                    if (lang === 'zh') path = 'zh/';
+                    else if (lang === 'ja') path = 'ja/';
+                    
+                    const newUrl = `${window.SITE_CONFIG.siteUrl}${path}`;
+                    setMeta('property', 'og:url', newUrl);
+                    setMeta('property', 'twitter:url', newUrl);
+                }
+
                 setText('profile-name', data.name);
                 setHTML('profile-bio', data.bio);
                 setText('contact-text', data.saveContact);

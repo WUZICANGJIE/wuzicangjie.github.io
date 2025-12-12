@@ -68,7 +68,7 @@ async function build() {
     // Inject config into main.js to avoid extra request and CSP issues
     const mainJsPath = path.join(distAssets, 'js', 'main.js');
     const mainJsContent = await fs.readFile(mainJsPath, 'utf8');
-    const configContent = `window.I18N=${JSON.stringify(i18n)};window.SITE_CONFIG={baseUrl:"${site.baseUrl}"};`;
+    const configContent = `window.I18N=${JSON.stringify(i18n)};window.SITE_CONFIG={baseUrl:"${site.baseUrl}",siteUrl:"${site.siteUrl}"};`;
     await fs.writeFile(mainJsPath, configContent + mainJsContent);
     
     // 3. Copy Public Files (Root files like robots.txt, CNAME)

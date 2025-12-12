@@ -5,7 +5,6 @@ Source code for my personal website, hosted on GitHub Pages.
 ## Features
 
 - **Multi-language**: English, Chinese, Japanese (SSG).
-- **UX**: Native View Transitions for smooth page navigation.
 - **SEO & Performance**: Static HTML generation, minified assets, strict CSP.
 - **Tech Stack**: Tailwind CSS v4, EJS, Node.js Build Script.
 - **Automated VCF**: vCard files are automatically generated from configuration.
