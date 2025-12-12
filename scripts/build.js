@@ -86,6 +86,21 @@ async function build() {
 
     const languages = Object.keys(i18n);
 
+    const lastmod = new Date().toISOString().split('T')[0];
+    const changefreq = 'monthly';
+    const sitemapEntries = languages.map((lang) => {
+        const isDefault = lang === 'en';
+        const loc = isDefault ? site.siteUrl : `${site.siteUrl}${lang}/`;
+        const priority = isDefault ? '1.0' : '0.8';
+
+        return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+    }).join('\n');
+
+    const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapEntries}\n</urlset>`;
+
+    await fs.writeFile(path.join(distDir, 'sitemap.xml'), sitemapContent);
+    console.log('Generated sitemap.xml.');
+
     await Promise.all(languages.map(async (lang) => {
         const t = i18n[lang];
         const isDefault = lang === 'en';
