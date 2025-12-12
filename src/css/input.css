@@ -78,8 +78,6 @@
   }
 }
 
-@layer base {
-  @view-transition {
-    navigation: auto;
-  }
+@view-transition {
+  navigation: auto;
 }
