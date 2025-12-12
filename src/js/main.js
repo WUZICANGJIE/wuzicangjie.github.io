@@ -112,16 +112,18 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 element.classList.add('animate-fade-in');
             };
 
-            const parseLangFromHref = (href) => {
-                const url = new URL(href, window.location.origin);
-                const [, firstSegment] = url.pathname.split('/');
-                return Object.keys(LANG_CONFIG).find((key) => LANG_CONFIG[key].startsWith(`${firstSegment}/`)) || 'en';
+            const getLangFromPath = (path = window.location.pathname) => {
+                const pathOnly = path.startsWith('http') ? path.replace(/^https?:\/\/[^/]+/, '') : path;
+                const [, firstSegment = ''] = pathOnly.replace(/^\/+/, '/').split('/');
+                const normalizedSegment = firstSegment ? `${firstSegment}/` : '';
+                const entry = Object.entries(LANG_CONFIG).find(([, prefix]) => prefix === normalizedSegment);
+                return entry ? entry[0] : 'en';
             };
 
             const getLangFromLink = (link) => {
                 if (link?.dataset?.lang) return link.dataset.lang;
-                const href = link?.getAttribute('href') || window.location.href;
-                return parseLangFromHref(href);
+                const href = link?.getAttribute('href') || window.location.pathname;
+                return getLangFromPath(href);
             };
 
             const updateContent = (lang) => {
@@ -173,11 +175,11 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 });
             };
 
-            if (window.I18N && window.SITE_CONFIG) {
-                langLinks.forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const href = link.getAttribute('href');
+                if (window.I18N && window.SITE_CONFIG) {
+                    langLinks.forEach(link => {
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const href = link.getAttribute('href');
                         const lang = getLangFromLink(link);
                         updateContent(lang);
                         window.history.pushState({ lang }, '', href);
@@ -186,7 +188,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 });
 
                 window.addEventListener('popstate', () => {
-                    const lang = parseLangFromHref(window.location.href);
+                    const lang = getLangFromPath(window.location.pathname);
                     updateContent(lang);
                 });
             }
