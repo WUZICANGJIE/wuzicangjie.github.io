@@ -102,9 +102,8 @@
             <!-- Title and Bio (with ID for JS update) -->
             <div>
                 <h1 id="profile-name" class="text-2xl font-bold mb-2 tracking-tight">Shaohan Sun</h1>
-                <p id="profile-bio" class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed whitespace-pre-line">
-                    Econ student.
-                    Homelab/Investing/Rhythm Games
+                <p id="profile-bio" class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">
+                    Econ student.<br>Homelab/Investing/Rhythm Games
                 </p>
             </div>
 
@@ -169,19 +168,19 @@
             zh: {
                 title: "孙少瀚 (無字倉頡)",
                 name: "孙少瀚",
-                bio: "Econ student.\nHomelab/投资/音游",
+                bio: "Econ student.<br>Homelab/投资/音游",
                 saveContact: "添加联系人"
             },
             en: {
                 title: "Shaohan Sun (無字倉頡)",
                 name: "Shaohan Sun",
-                bio: "Econ student.\nHomelab/Investing/Rhythm Games",
+                bio: "Econ student.<br>Homelab/Investing/Rhythm Games",
                 saveContact: "Save Contact"
             },
             ja: {
                 title: "孫少瀚 (無字倉頡)",
                 name: "孫少瀚",
-                bio: "Econ student.\n自宅サーバー・投資・音ゲー",
+                bio: "Econ student.<br>自宅サーバー・投資・音ゲー",
                 saveContact: "連絡先を追加"
             }
         };
@@ -241,7 +240,7 @@ END:VCARD`
             document.title = t.title;
             document.documentElement.lang = lang;
             document.getElementById('profile-name').innerText = t.name;
-            document.getElementById('profile-bio').innerText = t.bio;
+            document.getElementById('profile-bio').innerHTML = t.bio;
             document.getElementById('btn-save-contact').innerText = t.saveContact;
 
             // Update Menu Items State
