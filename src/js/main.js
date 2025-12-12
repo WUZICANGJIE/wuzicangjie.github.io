@@ -12,7 +12,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
             title: "孙少瀚 (无字仓颉)",
             name: "孙少瀚",
             bio: "经济学学生<br>家用服务器/投资/音游",
-            description: "经济学学生，家用服务器爱好者，投资者，音游玩家。",
+            description: "经济学学生。家用服务器爱好者，投资者，音游玩家。",
             saveContact: "添加联系人"
         },
         en: {
@@ -26,7 +26,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
             title: "孫少瀚 (無字倉頡)",
             name: "孫少瀚",
             bio: "経済学の学生<br>自宅サーバー・投資・音ゲー",
-            description: "経済学の学生、自宅サーバー愛好家、投資家、音ゲーマー。",
+            description: "経済学の学生。自宅サーバー愛好家、投資家、音ゲーマー。",
             saveContact: "連絡先を追加"
         }
     };
@@ -115,10 +115,21 @@ END:VCARD`
         document.getElementById('profile-name').innerText = t.name;
         document.getElementById('profile-bio').innerHTML = t.bio;
         
-        // Update Meta Description
-        const metaDesc = document.querySelector('meta[name="description"]');
-        if (metaDesc) {
-            metaDesc.setAttribute('content', t.description);
+        // Update Meta Tags (SEO & Social)
+        const metaUpdates = {
+            'meta[name="description"]': t.description,
+            'meta[name="title"]': t.title,
+            'meta[property="og:title"]': t.title,
+            'meta[property="og:description"]': t.description,
+            'meta[property="twitter:title"]': t.title,
+            'meta[property="twitter:description"]': t.description
+        };
+
+        for (const [selector, content] of Object.entries(metaUpdates)) {
+            const element = document.querySelector(selector);
+            if (element) {
+                element.setAttribute('content', content);
+            }
         }
 
         // Update JSON-LD
