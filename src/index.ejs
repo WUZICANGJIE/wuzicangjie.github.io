@@ -57,6 +57,8 @@
     }, null, 2) %>
     </script>
 
+    <script src="<%= site.baseUrl %>assets/js/config.js?v=<%= version %>"></script>
+
     <!-- Preload CSS for Performance -->
     <link rel="preload" href="<%= site.baseUrl %>assets/css/style.css?v=<%= version %>" as="style">
 
@@ -136,7 +138,6 @@
 
     </main>
 
-    <script src="<%= site.baseUrl %>assets/js/config.js?v=<%= version %>" defer></script>
-    <script src="<%= site.baseUrl %>assets/js/main.js?v=<%= version %>" defer></script>
+    <script src="<%= site.baseUrl %>assets/js/main.js?v=<%= version %>"></script>
 </body>
 </html>
