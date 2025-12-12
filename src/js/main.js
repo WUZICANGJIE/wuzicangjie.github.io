@@ -107,6 +107,12 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
             };
             const profileNameParent = domRefs.profileName?.parentElement;
 
+            const translatableElements = Array.from(document.querySelectorAll('[data-i18n]')).map((element) => ({
+                element,
+                key: element.dataset.i18n,
+                type: element.dataset.i18nType || 'text'
+            }));
+
             const setMeta = (type, name, content) => {
                 const element = metaCache[type].get(name);
                 if (element) element.content = content;
@@ -116,19 +122,24 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 Object.entries(entries).forEach(([name, content]) => setMeta(type, name, content));
             };
 
-            const setText = (el, text) => {
-                if (el) el.innerText = text;
-            };
-
-            const setHTML = (el, html) => {
-                if (el) el.innerHTML = html;
-            };
-
             const replayAnimation = (element) => {
                 if (!element) return;
                 element.classList.remove('animate-fade-in');
                 void element.offsetWidth; // trigger reflow
                 element.classList.add('animate-fade-in');
+            };
+
+            const applyTranslations = (langData) => {
+                translatableElements.forEach(({ element, key, type }) => {
+                    const value = langData?.[key];
+                    if (value === undefined) return;
+
+                    if (type === 'html') {
+                        element.innerHTML = value;
+                    } else {
+                        element.innerText = value;
+                    }
+                });
             };
 
             let currentLang = null;
@@ -162,9 +173,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                     });
                 }
 
-                setText(domRefs.profileName, data.name);
-                setHTML(domRefs.profileBio, data.bio);
-                setText(domRefs.contactText, data.saveContact);
+                applyTranslations(data);
 
                 if (domRefs.contactBtn && window.SITE_CONFIG) {
                     domRefs.contactBtn.href = `${window.SITE_CONFIG.baseUrl}${lang}.vcf`;
