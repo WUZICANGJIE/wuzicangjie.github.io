@@ -61,8 +61,24 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 }
             });
 
+            const getLangFromPath = (path = window.location.pathname) => {
+                const pathOnly = path.startsWith('http') ? path.replace(/^https?:\/\/[^/]+/, '') : path;
+                // Normalize path to compare only the first segment with the prefix map.
+                const [, firstSegment = ''] = pathOnly.replace(/^\/+/, '/').split('/');
+                const normalizedSegment = firstSegment ? `${firstSegment}/` : '';
+                // Match the first path segment against known prefixes, defaulting to English
+                return LANG_PREFIX_MAP[normalizedSegment] ?? 'en';
+            };
+
+            const getLangFromLink = (link) => {
+                if (link?.dataset?.lang) return link.dataset.lang;
+                const href = link?.getAttribute('href') || window.location.pathname;
+                return getLangFromPath(href);
+            };
+
             // Client-side Language Switching
             const langLinks = menu.querySelectorAll('a');
+            const linkLangs = new Map(Array.from(langLinks, (link) => [link, getLangFromLink(link)]));
 
             const metaCache = { name: new Map(), property: new Map() };
             const cacheMeta = (type, names) => {
@@ -115,21 +131,6 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 element.classList.add('animate-fade-in');
             };
 
-            const getLangFromPath = (path = window.location.pathname) => {
-                const pathOnly = path.startsWith('http') ? path.replace(/^https?:\/\/[^/]+/, '') : path;
-                // Normalize path to compare only the first segment with the prefix map.
-                const [, firstSegment = ''] = pathOnly.replace(/^\/+/, '/').split('/');
-                const normalizedSegment = firstSegment ? `${firstSegment}/` : '';
-                // Match the first path segment against known prefixes, defaulting to English
-                return LANG_PREFIX_MAP[normalizedSegment] ?? 'en';
-            };
-
-            const getLangFromLink = (link) => {
-                if (link?.dataset?.lang) return link.dataset.lang;
-                const href = link?.getAttribute('href') || window.location.pathname;
-                return getLangFromPath(href);
-            };
-
             let currentLang = null;
 
             const updateContent = (lang) => {
@@ -177,7 +178,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 replayAnimation(domRefs.contactIcon);
 
                 langLinks.forEach((link) => {
-                    const linkLang = getLangFromLink(link);
+                    const linkLang = linkLangs.get(link);
                     const method = linkLang === lang ? 'add' : 'remove';
                     link.classList[method]('bg-gray-50', 'dark:bg-zinc-700/50', 'font-bold');
                 });
@@ -187,10 +188,11 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
 
             if (window.I18N) {
                 langLinks.forEach((link) => {
+                    const lang = linkLangs.get(link);
+
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
                         const href = link.getAttribute('href');
-                        const lang = getLangFromLink(link);
                         updateContent(lang);
                         window.history.pushState({ lang }, '', href);
                         toggleMenu(false);
