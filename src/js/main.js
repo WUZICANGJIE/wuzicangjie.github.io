@@ -173,7 +173,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
 
             let currentLang = null;
 
-            const updateContent = (lang) => {
+            const updateContent = (lang, { animate = true } = {}) => {
                 if (!lang || lang === currentLang) return;
 
                 const data = window.I18N && window.I18N[lang];
@@ -208,12 +208,14 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                     domRefs.contactBtn.href = `${window.SITE_CONFIG.baseUrl}${lang}.vcf`;
                 }
 
-                if (profileNameParent) {
-                    replayAnimation(profileNameParent);
-                }
+                if (animate) {
+                    if (profileNameParent) {
+                        replayAnimation(profileNameParent);
+                    }
 
-                replayAnimation(domRefs.contactText);
-                replayAnimation(domRefs.contactIcon);
+                    replayAnimation(domRefs.contactText);
+                    replayAnimation(domRefs.contactIcon);
+                }
 
                 langLinks.forEach((link) => {
                     const linkLang = linkLangs.get(link);
@@ -226,19 +228,20 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
 
             if (window.I18N) {
                 const tryAutoRedirect = () => {
-                    if (getLangFromPath() !== 'en') return;
+                    if (getLangFromPath() !== 'en') return false;
 
                     const redirectKey = 'preferredLangRedirected';
-                    if (sessionStorage.getItem(redirectKey) === 'true') return;
+                    if (sessionStorage.getItem(redirectKey) === 'true') return false;
 
                     const preferredLang = detectPreferredLanguage();
-                    if (!preferredLang || preferredLang === 'en') return;
+                    if (!preferredLang || preferredLang === 'en') return false;
 
                     sessionStorage.setItem(redirectKey, 'true');
                     window.location.replace(buildLangUrl(preferredLang));
+                    return true;
                 };
 
-                tryAutoRedirect();
+                const isAutoRedirecting = tryAutoRedirect();
 
                 langLinks.forEach((link) => {
                     const lang = linkLangs.get(link);
@@ -258,7 +261,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 });
 
                 const initialLang = getLangFromPath();
-                updateContent(initialLang);
+                updateContent(initialLang, { animate: !isAutoRedirecting });
             }
         }
     });
