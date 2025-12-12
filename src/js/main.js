@@ -20,12 +20,15 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
         const menuBtn = document.getElementById('lang-menu-btn');
         const menu = document.getElementById('lang-menu');
 
-        if (menuBtn && menu) {
-            const LANG_CONFIG = {
-                en: '',
-                zh: 'zh/',
-                ja: 'ja/'
-            };
+            if (menuBtn && menu) {
+                const LANG_CONFIG = {
+                    en: '',
+                    zh: 'zh/',
+                    ja: 'ja/'
+                };
+                const LANG_PREFIX_MAP = Object.fromEntries(
+                    Object.entries(LANG_CONFIG).map(([code, prefix]) => [prefix, code])
+                );
 
             const toggleMenu = (show) => {
                 const isHidden = menu.classList.contains('hidden');
@@ -114,10 +117,10 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
 
             const getLangFromPath = (path = window.location.pathname) => {
                 const pathOnly = path.startsWith('http') ? path.replace(/^https?:\/\/[^/]+/, '') : path;
+                // Normalize path to compare only the first segment with the prefix map.
                 const [, firstSegment = ''] = pathOnly.replace(/^\/+/, '/').split('/');
                 const normalizedSegment = firstSegment ? `${firstSegment}/` : '';
-                const entry = Object.entries(LANG_CONFIG).find(([, prefix]) => prefix === normalizedSegment);
-                return entry ? entry[0] : 'en';
+                return LANG_PREFIX_MAP[normalizedSegment] ?? 'en';
             };
 
             const getLangFromLink = (link) => {
