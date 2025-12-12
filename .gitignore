@@ -6,8 +6,6 @@ yarn-error.log*
 .vscode/
 
 # Build Artifacts
-/index.html
-/zh/
-/ja/
+/dist/
 /assets/css/
 /assets/js/

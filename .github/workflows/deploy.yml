@@ -33,22 +33,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Prepare artifact
-        run: |
-          mkdir dist
-          cp index.html dist/
-          cp -r assets dist/
-          cp -r zh dist/ || true
-          cp -r ja dist/ || true
-          cp .nojekyll dist/ || true
-          cp CNAME dist/ || true
-          cp robots.txt dist/ || true
-          cp site.webmanifest dist/ || true
-          cp sitemap.xml dist/ || true
-          cp favicon* dist/ || true
-          cp apple-touch-icon.png dist/ || true
-          cp web-app-manifest-*.png dist/ || true
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
