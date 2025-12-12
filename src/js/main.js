@@ -21,10 +21,16 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
         const menu = document.getElementById('lang-menu');
 
         if (menuBtn && menu) {
+            const LANG_CONFIG = {
+                en: '',
+                zh: 'zh/',
+                ja: 'ja/'
+            };
+
             const toggleMenu = (show) => {
                 const isHidden = menu.classList.contains('hidden');
                 if (show === undefined) show = isHidden;
-                
+
                 if (show) {
                     menu.classList.remove('hidden');
                     menuBtn.setAttribute('aria-expanded', 'true');
@@ -60,6 +66,10 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 if (element) element.content = content;
             };
 
+            const setMetaBatch = (type, entries) => {
+                Object.entries(entries).forEach(([name, content]) => setMeta(type, name, content));
+            };
+
             const setText = (id, text) => {
                 const el = document.getElementById(id);
                 if (el) el.innerText = text;
@@ -77,6 +87,16 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 element.classList.add('animate-fade-in');
             };
 
+            const getLangFromUrl = (url) => {
+                try {
+                    const pathname = new URL(url, window.location.origin).pathname;
+                    const [, firstSegment] = pathname.split('/');
+                    return Object.keys(LANG_CONFIG).find((key) => LANG_CONFIG[key].startsWith(`${firstSegment}/`)) || 'en';
+                } catch (err) {
+                    return 'en';
+                }
+            };
+
             const updateContent = (lang) => {
                 const data = window.I18N && window.I18N[lang];
                 if (!data) return;
@@ -84,21 +104,24 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 document.documentElement.lang = lang;
                 document.title = data.title;
 
-                setMeta('name', 'title', data.title);
-                setMeta('name', 'description', data.description);
-                setMeta('property', 'og:title', data.title);
-                setMeta('property', 'og:description', data.description);
-                setMeta('property', 'twitter:title', data.title);
-                setMeta('property', 'twitter:description', data.description);
+                setMetaBatch('name', {
+                    title: data.title,
+                    description: data.description
+                });
+
+                setMetaBatch('property', {
+                    'og:title': data.title,
+                    'og:description': data.description,
+                    'twitter:title': data.title,
+                    'twitter:description': data.description
+                });
 
                 if (window.SITE_CONFIG) {
-                    let path = '';
-                    if (lang === 'zh') path = 'zh/';
-                    else if (lang === 'ja') path = 'ja/';
-                    
-                    const newUrl = `${window.SITE_CONFIG.siteUrl}${path}`;
-                    setMeta('property', 'og:url', newUrl);
-                    setMeta('property', 'twitter:url', newUrl);
+                    const newUrl = `${window.SITE_CONFIG.siteUrl}${LANG_CONFIG[lang] || ''}`;
+                    setMetaBatch('property', {
+                        'og:url': newUrl,
+                        'twitter:url': newUrl
+                    });
                 }
 
                 setText('profile-name', data.name);
@@ -119,16 +142,9 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 replayAnimation(document.getElementById('contact-icon'));
 
                 langLinks.forEach(link => {
-                    const linkHref = link.getAttribute('href');
-                    let linkLang = 'en';
-                    if (linkHref.includes('/zh/')) linkLang = 'zh';
-                    else if (linkHref.includes('/ja/')) linkLang = 'ja';
-
-                    if (linkLang === lang) {
-                        link.classList.add('bg-gray-50', 'dark:bg-zinc-700/50', 'font-bold');
-                    } else {
-                        link.classList.remove('bg-gray-50', 'dark:bg-zinc-700/50', 'font-bold');
-                    }
+                    const linkLang = getLangFromUrl(link.getAttribute('href'));
+                    const method = linkLang === lang ? 'add' : 'remove';
+                    link.classList[method]('bg-gray-50', 'dark:bg-zinc-700/50', 'font-bold');
                 });
             };
 
@@ -137,10 +153,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
                         const href = link.getAttribute('href');
-                        let lang = 'en';
-                        if (href.includes('/zh/')) lang = 'zh';
-                        else if (href.includes('/ja/')) lang = 'ja';
-                        
+                        const lang = getLangFromUrl(href);
                         updateContent(lang);
                         window.history.pushState({ lang }, '', href);
                         toggleMenu(false);
@@ -148,10 +161,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 });
 
                 window.addEventListener('popstate', () => {
-                    const path = window.location.pathname;
-                    let lang = 'en';
-                    if (path.includes('/zh/')) lang = 'zh';
-                    else if (path.includes('/ja/')) lang = 'ja';
+                    const lang = getLangFromUrl(window.location.href);
                     updateContent(lang);
                 });
             }
