@@ -1,5 +1,6 @@
 module.exports = {
-    baseUrl: 'https://me.wuzicangjie.com/',
+    siteUrl: 'https://me.wuzicangjie.com/',
+    baseUrl: '/',
     socialLinks: [
         {
             name: 'Line',

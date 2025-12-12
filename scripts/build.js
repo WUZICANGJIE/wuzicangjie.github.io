@@ -102,8 +102,8 @@ async function build() {
         const t = i18n[lang];
         const isDefault = lang === 'en';
         
-        const baseUrl = site.baseUrl;
-        const langUrl = isDefault ? baseUrl : `${baseUrl}${lang}/`;
+        const siteUrl = site.siteUrl;
+        const langUrl = isDefault ? siteUrl : `${siteUrl}${lang}/`;
         
         // VCF Filename
         const vcfFilename = `${lang}.vcf`; // e.g., en.vcf, zh.vcf
@@ -129,7 +129,8 @@ async function build() {
             socialLinks: site.socialLinks,
             site: site,
             languages: languages,
-            year: currentYear
+            year: currentYear,
+            version: Date.now()
         };
 
         // Render HTML

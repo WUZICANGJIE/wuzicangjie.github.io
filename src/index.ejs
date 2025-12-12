@@ -8,9 +8,9 @@
     
     <!-- SEO: Hreflang Tags -->
     <% languages.forEach(l => { %>
-    <link rel="alternate" hreflang="<%= l %>" href="<%= site.baseUrl %><%= l === 'en' ? '' : l + '/' %>" />
+    <link rel="alternate" hreflang="<%= l %>" href="<%= site.siteUrl %><%= l === 'en' ? '' : l + '/' %>" />
     <% }); %>
-    <link rel="alternate" hreflang="x-default" href="<%= site.baseUrl %>" />
+    <link rel="alternate" hreflang="x-default" href="<%= site.siteUrl %>" />
 
     <!-- Primary Meta Tags -->
     <title><%= title %></title>
@@ -23,14 +23,14 @@
     <meta property="og:url" content="<%= url %>" />
     <meta property="og:title" content="<%= title %>" />
     <meta property="og:description" content="<%= description %>" />
-    <meta property="og:image" content="<%= site.baseUrl %>assets/images/og-image.webp" />
+    <meta property="og:image" content="<%= site.siteUrl %>assets/images/og-image.webp" />
 
     <!-- X (Twitter) -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="<%= url %>" />
     <meta property="twitter:title" content="<%= title %>" />
     <meta property="twitter:description" content="<%= description %>" />
-    <meta property="twitter:image" content="<%= site.baseUrl %>assets/images/og-image.webp" />
+    <meta property="twitter:image" content="<%= site.siteUrl %>assets/images/og-image.webp" />
 
     <link rel="icon" type="image/png" href="<%= site.baseUrl %>favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="<%= site.baseUrl %>favicon.svg" sizes="any" />
@@ -40,10 +40,10 @@
     <link rel="manifest" href="<%= site.baseUrl %>site.webmanifest" />
 
     <!-- Preload CSS for Performance -->
-    <link rel="preload" href="<%= site.baseUrl %>assets/css/style.css" as="style">
+    <link rel="preload" href="<%= site.baseUrl %>assets/css/style.css?v=<%= version %>" as="style">
 
     <!-- Import Tailwind CSS -->
-    <link rel="stylesheet" href="<%= site.baseUrl %>assets/css/style.css">
+    <link rel="stylesheet" href="<%= site.baseUrl %>assets/css/style.css?v=<%= version %>">
 </head>
 <body class="bg-gray-50 text-gray-800 dark:bg-zinc-900 dark:text-gray-200 min-h-screen min-w-[320px] flex flex-col justify-center items-center p-4 font-sans transition-colors duration-300">
 
@@ -112,7 +112,7 @@
 
         </div>
         
-        <footer class="mt-8 text-center text-xs text-gray-600 dark:text-gray-400 animate-fade-in [animation-delay:400ms]">
+        <footer class="mt-8 text-center text-xs text-gray-600 dark:text-gray-400">
             <p id="footer-text">&copy; <%= year %> wuzicangjie.</p>
         </footer>
 
