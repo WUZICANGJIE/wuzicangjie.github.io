@@ -22,44 +22,35 @@ module.exports = {
             saveContact: "連絡先を追加"
         }
     },
-    vcfData: {
-        en: `BEGIN:VCARD
-VERSION:3.0
-FN:Shaohan Sun
-N:Sun;Shaohan;;;
-X-PHONETIC-LAST-NAME:Sun
-X-PHONETIC-FIRST-NAME:Shaohan
-TEL;TYPE=CELL:+86 132 2425 0236
-TEL;TYPE=CELL:+81 80-7382-0454
-EMAIL;TYPE=INTERNET,HOME,PREF:wuzi.ssh@gmail.com
-EMAIL;TYPE=INTERNET,HOME:sysunshaohan@outlook.com
-EMAIL;TYPE=INTERNET,WORK:sunshaohan@akane.waseda.jp
-BDAY:20000815
-END:VCARD`,
-        ja: `BEGIN:VCARD
-VERSION:3.0
-FN:孫少瀚
-N:孫;少瀚;;;
-X-PHONETIC-FIRST-NAME:ショウハン
-X-PHONETIC-LAST-NAME:ソン
-TEL;TYPE=CELL:+81 80-7382-0454
-EMAIL;TYPE=INTERNET,HOME,PREF:wuzi.ssh@gmail.com
-EMAIL;TYPE=INTERNET,HOME:sysunshaohan@outlook.com
-EMAIL;TYPE=INTERNET,WORK:sunshaohan@akane.waseda.jp
-BDAY:20000815
-END:VCARD`,
-        zh: `BEGIN:VCARD
-VERSION:3.0
-FN:孙少瀚
-N:孙;少瀚;;;
-X-PHONETIC-LAST-NAME:Sun
-X-PHONETIC-FIRST-NAME:Shaohan
-TEL;TYPE=CELL:+86 132 2425 0236
-TEL;TYPE=CELL:+81 80-7382-0454
-EMAIL;TYPE=INTERNET,HOME,PREF:wuzi.ssh@gmail.com
-EMAIL;TYPE=INTERNET,HOME:sysunshaohan@outlook.com
-EMAIL;TYPE=INTERNET,WORK:sunshaohan@akane.waseda.jp
-BDAY:20000815
-END:VCARD`
+    vcfProfiles: {
+        common: {
+            emails: [
+                { type: "INTERNET,HOME,PREF", value: "wuzi.ssh@gmail.com" },
+                { type: "INTERNET,HOME", value: "sysunshaohan@outlook.com" },
+                { type: "INTERNET,WORK", value: "sunshaohan@akane.waseda.jp" }
+            ],
+            bday: "20000815"
+        },
+        zh: {
+            fn: "孙少瀚",
+            n: "孙;少瀚;;;",
+            xPhoneticLast: "Sun",
+            xPhoneticFirst: "Shaohan",
+            phones: ["+86 132 2425 0236", "+81 80-7382-0454"]
+        },
+        en: {
+            fn: "Shaohan Sun",
+            n: "Sun;Shaohan;;;",
+            xPhoneticLast: "Sun",
+            xPhoneticFirst: "Shaohan",
+            phones: ["+86 132 2425 0236", "+81 80-7382-0454"]
+        },
+        ja: {
+            fn: "孫少瀚",
+            n: "孫;少瀚;;;",
+            xPhoneticLast: "ソン",
+            xPhoneticFirst: "ショウハン",
+            phones: ["+81 80-7382-0454"]
+        }
     }
 };

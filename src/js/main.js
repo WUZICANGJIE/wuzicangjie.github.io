@@ -10,7 +10,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
     // Initialize on DOMContentLoaded
     document.addEventListener('DOMContentLoaded', () => {
         // Avatar Error Handler
-        const avatarImg = document.querySelector('img[alt="Shaohan Sun"]');
+        const avatarImg = document.getElementById('avatar-img');
         if (avatarImg) {
             avatarImg.addEventListener('error', function() {
                 this.src = 'https://ui-avatars.com/api/?name=Wu+Zi&background=random';

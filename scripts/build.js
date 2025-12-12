@@ -2,7 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const { minify } = require('html-minifier-terser');
 const ejs = require('ejs');
-const { i18n, vcfData } = require('../src/data/i18n');
+const { i18n, vcfProfiles } = require('../src/data/i18n');
+const site = require('../src/data/site');
 
 const rootDir = path.resolve(__dirname, '..');
 const srcDir = path.join(rootDir, 'src');
@@ -31,6 +32,41 @@ const rootFiles = [
     'web-app-manifest-512x512.png'
 ];
 
+function generateVcf(lang) {
+    const profile = vcfProfiles[lang];
+    const common = vcfProfiles.common;
+    
+    if (!profile) return null;
+
+    let vcf = 'BEGIN:VCARD\nVERSION:3.0\n';
+    vcf += `FN:${profile.fn}\n`;
+    vcf += `N:${profile.n}\n`;
+    
+    if (profile.xPhoneticLast) {
+        vcf += `X-PHONETIC-LAST-NAME:${profile.xPhoneticLast}\n`;
+    }
+    if (profile.xPhoneticFirst) {
+        vcf += `X-PHONETIC-FIRST-NAME:${profile.xPhoneticFirst}\n`;
+    }
+    
+    const phones = profile.phones || common.phones || [];
+    phones.forEach(phone => {
+        vcf += `TEL;TYPE=CELL:${phone}\n`;
+    });
+    
+    const emails = profile.emails || common.emails || [];
+    emails.forEach(email => {
+        vcf += `EMAIL;TYPE=${email.type}:${email.value}\n`;
+    });
+    
+    if (common.bday) {
+        vcf += `BDAY:${common.bday}\n`;
+    }
+    
+    vcf += 'END:VCARD';
+    return vcf;
+}
+
 async function build() {
     console.log('Starting build...');
 
@@ -58,12 +94,13 @@ async function build() {
     // 4. Generate HTML & VCF
     const templatePath = path.join(srcDir, 'index.ejs');
     const template = fs.readFileSync(templatePath, 'utf8');
+    const currentYear = new Date().getFullYear();
 
     for (const lang of ['en', 'zh', 'ja']) {
         const t = i18n[lang];
         const isDefault = lang === 'en';
         
-        const baseUrl = 'https://me.wuzicangjie.com/';
+        const baseUrl = site.baseUrl;
         const langUrl = isDefault ? baseUrl : `${baseUrl}${lang}/`;
         
         // VCF Filename
@@ -71,8 +108,9 @@ async function build() {
         const vcfPath = path.join(distDir, vcfFilename);
         
         // Write VCF
-        if (vcfData[lang]) {
-            fs.writeFileSync(vcfPath, vcfData[lang]);
+        const vcfContent = generateVcf(lang);
+        if (vcfContent) {
+            fs.writeFileSync(vcfPath, vcfContent);
             console.log(`Generated ${vcfFilename}`);
         }
 
@@ -85,7 +123,9 @@ async function build() {
             bio: t.bio,
             saveContact: t.saveContact,
             url: langUrl,
-            vcfLink: `/${vcfFilename}`
+            vcfLink: `/${vcfFilename}`,
+            socialLinks: site.socialLinks,
+            year: currentYear
         };
 
         // Render HTML
