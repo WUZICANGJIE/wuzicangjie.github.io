@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/style.css --minify",
+    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/style.css --minify",
+    "build:html": "npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true -o index.html src/index.html",
+    "build": "npm run build:css && npm run build:html",
     "watch": "npx @tailwindcss/cli -i ./src/input.css -o ./assets/css/style.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,6 +24,7 @@
   "homepage": "https://github.com/WUZICANGJIE/wuzicangjie.github.io#readme",
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.17",
+    "html-minifier-terser": "^7.2.0",
     "tailwindcss": "^4.1.17"
   }
 }

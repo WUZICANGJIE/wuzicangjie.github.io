@@ -1,4 +1,4 @@
-name: Build Tailwind CSS
+name: Build Site
 
 on:
   push:
@@ -6,7 +6,6 @@ on:
       - main
     paths:
       - 'src/**'
-      - 'index.html'
       - 'package.json'
 
 jobs:
@@ -31,11 +30,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build CSS
+      - name: Build Site
         run: npm run build
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "style: auto-build tailwind css"
-          file_pattern: assets/css/style.css
+          commit_message: "chore: build css and html"
+          file_pattern: assets/css/style.css index.html
