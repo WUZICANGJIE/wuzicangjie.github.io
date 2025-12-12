@@ -83,6 +83,13 @@
             width: 1.75rem; /* w-7 equivalent */
             height: 1.75rem; /* h-7 equivalent */
             margin-bottom: 0.25rem; /* mb-1 equivalent */
+            background-color: currentColor;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
         }
 
         /* Prevent image saving/dragging */
@@ -153,37 +160,37 @@
             <div class="grid grid-cols-3 gap-4 animate-fade-in delay-300">
                 <!-- Line -->
                 <a href="https://line.me/ti/p/mQdP8ETk4a" target="_blank" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-green-50 dark:hover:bg-green-900/20 text-gray-600 dark:text-gray-400 hover:text-[#00B900] transition-colors">
-                    <img src="assets/icons/line.svg" width="28" height="28" class="social-icon opacity-70 dark:invert" alt="">
+                    <div class="social-icon opacity-70" style="-webkit-mask-image: url('assets/icons/line.svg'); mask-image: url('assets/icons/line.svg');"></div>
                     <span class="text-xs">Line</span>
                 </a>
                 
                 <!-- Discord -->
                 <a href="https://discord.gg/aJeAmQ66" target="_blank" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-900/20 text-gray-600 dark:text-gray-400 hover:text-[#5865F2] transition-colors">
-                    <img src="assets/icons/discord.svg" width="28" height="28" class="social-icon opacity-70 dark:invert" alt="">
+                    <div class="social-icon opacity-70" style="-webkit-mask-image: url('assets/icons/discord.svg'); mask-image: url('assets/icons/discord.svg');"></div>
                     <span class="text-xs">Discord</span>
                 </a>
 
                 <!-- Telegram -->
                 <a href="https://t.me/wuzicangjie" target="_blank" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-sky-50 dark:hover:bg-sky-900/20 text-gray-600 dark:text-gray-400 hover:text-[#0088cc] transition-colors">
-                    <img src="assets/icons/telegram.svg" width="28" height="28" class="social-icon opacity-70 dark:invert" alt="">
+                    <div class="social-icon opacity-70" style="-webkit-mask-image: url('assets/icons/telegram.svg'); mask-image: url('assets/icons/telegram.svg');"></div>
                     <span class="text-xs">Telegram</span>
                 </a>
 
                 <!-- X -->
                 <a href="https://x.com/mujisoketsu" target="_blank" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-zinc-700 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
-                    <img src="assets/icons/x.svg" width="28" height="28" class="social-icon opacity-70 dark:invert" alt="">
+                    <div class="social-icon opacity-70" style="-webkit-mask-image: url('assets/icons/x.svg'); mask-image: url('assets/icons/x.svg');"></div>
                     <span class="text-xs">X</span>
                 </a>
 
                 <!-- GitHub -->
                 <a href="https://github.com/WUZICANGJIE" target="_blank" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-zinc-700 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
-                    <img src="assets/icons/github.svg" width="28" height="28" class="social-icon opacity-70 dark:invert" alt="">
+                    <div class="social-icon opacity-70" style="-webkit-mask-image: url('assets/icons/github.svg'); mask-image: url('assets/icons/github.svg');"></div>
                     <span class="text-xs">GitHub</span>
                 </a>
 
                 <!-- Email -->
                 <a href="mailto:wuzi.ssh@gmail.com" class="flex flex-col items-center justify-center p-3 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors">
-                    <img src="assets/icons/gmail.svg" width="28" height="28" class="social-icon opacity-70 dark:invert" alt="">
+                    <div class="social-icon opacity-70" style="-webkit-mask-image: url('assets/icons/gmail.svg'); mask-image: url('assets/icons/gmail.svg');"></div>
                     <span class="text-xs">Email</span>
                 </a>
             </div>
