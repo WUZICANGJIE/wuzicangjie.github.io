@@ -4,3 +4,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .vscode/
+
+# Build Artifacts
+/index.html
+/zh/
+/ja/
+/assets/css/
+/assets/js/
