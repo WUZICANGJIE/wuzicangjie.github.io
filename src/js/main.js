@@ -87,14 +87,16 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 element.classList.add('animate-fade-in');
             };
 
-            const getLangFromUrl = (url) => {
-                try {
-                    const pathname = new URL(url, window.location.origin).pathname;
-                    const [, firstSegment] = pathname.split('/');
-                    return Object.keys(LANG_CONFIG).find((key) => LANG_CONFIG[key].startsWith(`${firstSegment}/`)) || 'en';
-                } catch (err) {
-                    return 'en';
-                }
+            const parseLangFromHref = (href) => {
+                const url = new URL(href, window.location.origin);
+                const [, firstSegment] = url.pathname.split('/');
+                return Object.keys(LANG_CONFIG).find((key) => LANG_CONFIG[key].startsWith(`${firstSegment}/`)) || 'en';
+            };
+
+            const getLangFromLink = (link) => {
+                if (link?.dataset?.lang) return link.dataset.lang;
+                const href = link?.getAttribute('href') || window.location.href;
+                return parseLangFromHref(href);
             };
 
             const updateContent = (lang) => {
@@ -142,7 +144,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 replayAnimation(document.getElementById('contact-icon'));
 
                 langLinks.forEach(link => {
-                    const linkLang = getLangFromUrl(link.getAttribute('href'));
+                    const linkLang = getLangFromLink(link);
                     const method = linkLang === lang ? 'add' : 'remove';
                     link.classList[method]('bg-gray-50', 'dark:bg-zinc-700/50', 'font-bold');
                 });
@@ -153,7 +155,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
                         const href = link.getAttribute('href');
-                        const lang = getLangFromUrl(href);
+                        const lang = getLangFromLink(link);
                         updateContent(lang);
                         window.history.pushState({ lang }, '', href);
                         toggleMenu(false);
@@ -161,7 +163,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 });
 
                 window.addEventListener('popstate', () => {
-                    const lang = getLangFromUrl(window.location.href);
+                    const lang = parseLangFromHref(window.location.href);
                     updateContent(lang);
                 });
             }

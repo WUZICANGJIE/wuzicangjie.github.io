@@ -60,13 +60,13 @@
                 <!-- Dropdown Menu -->
                 <div id="lang-menu" role="menu" aria-orientation="vertical" aria-labelledby="lang-menu-btn" class="hidden absolute right-0 mt-2 w-32 rounded-xl bg-white dark:bg-zinc-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden transform origin-top-right transition-all duration-200">
                     <div class="py-1" role="none">
-                        <a href="<%= site.baseUrl %>zh/" role="menuitem" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2 <%= lang === 'zh' ? 'bg-gray-50 dark:bg-zinc-700/50 font-bold' : '' %>">
+                        <a href="<%= site.baseUrl %>zh/" role="menuitem" data-lang="zh" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2 <%= lang === 'zh' ? 'bg-gray-50 dark:bg-zinc-700/50 font-bold' : '' %>">
                             <span class="w-4 text-center">🇨🇳</span> 中文
                         </a>
-                        <a href="<%= site.baseUrl %>" role="menuitem" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2 <%= lang === 'en' ? 'bg-gray-50 dark:bg-zinc-700/50 font-bold' : '' %>">
+                        <a href="<%= site.baseUrl %>" role="menuitem" data-lang="en" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2 <%= lang === 'en' ? 'bg-gray-50 dark:bg-zinc-700/50 font-bold' : '' %>">
                             <span class="w-4 text-center">🇺🇸</span> English
                         </a>
-                        <a href="<%= site.baseUrl %>ja/" role="menuitem" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2 <%= lang === 'ja' ? 'bg-gray-50 dark:bg-zinc-700/50 font-bold' : '' %>">
+                        <a href="<%= site.baseUrl %>ja/" role="menuitem" data-lang="ja" class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2 <%= lang === 'ja' ? 'bg-gray-50 dark:bg-zinc-700/50 font-bold' : '' %>">
                             <span class="w-4 text-center">🇯🇵</span> 日本語
                         </a>
                     </div>
