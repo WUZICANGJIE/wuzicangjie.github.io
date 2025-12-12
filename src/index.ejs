@@ -40,6 +40,20 @@
     <meta name="apple-mobile-web-app-title" content="Shaohan" />
     <link rel="manifest" href="<%= site.baseUrl %>site.webmanifest" />
 
+    <script type="application/ld+json">
+    <%- JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name,
+        description,
+        url,
+        image: `${site.siteUrl}assets/images/avatar.webp`,
+        sameAs: socialLinks
+            .filter(link => !link.url.startsWith('mailto:'))
+            .map(link => link.url)
+    }, null, 2) %>
+    </script>
+
     <!-- Preload CSS for Performance -->
     <link rel="preload" href="<%= site.baseUrl %>assets/css/style.css?v=<%= version %>" as="style">
 
