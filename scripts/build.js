@@ -96,7 +96,9 @@ async function build() {
     const template = fs.readFileSync(templatePath, 'utf8');
     const currentYear = new Date().getFullYear();
 
-    for (const lang of ['en', 'zh', 'ja']) {
+    const languages = Object.keys(i18n);
+
+    for (const lang of languages) {
         const t = i18n[lang];
         const isDefault = lang === 'en';
         
@@ -123,8 +125,10 @@ async function build() {
             bio: t.bio,
             saveContact: t.saveContact,
             url: langUrl,
-            vcfLink: `/${vcfFilename}`,
+            vcfLink: `${site.baseUrl}${vcfFilename}`,
             socialLinks: site.socialLinks,
+            site: site,
+            languages: languages,
             year: currentYear
         };
 

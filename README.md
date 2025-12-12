@@ -18,6 +18,7 @@ Source code for my personal website, hosted on GitHub Pages.
   - `index.ejs`: Main HTML template.
   - `css/`: Tailwind CSS input.
   - `js/`: Client-side JavaScript.
+- `assets/`: Static assets (images, icons) and compiled resources.
 - `scripts/`: Build scripts (`build.js`).
 - `dist/`: Production build output.
 
@@ -27,7 +28,7 @@ Source code for my personal website, hosted on GitHub Pages.
 Edit `src/data/i18n.js` to update text content and vCard information for each language.
 
 ### Social Links
-Edit `src/data/site.js` to manage social media links and icons.
+Edit `src/data/site.js` to manage social media links, icons, and the `baseUrl` (critical for CSP and asset paths).
 
 ## Development
 
