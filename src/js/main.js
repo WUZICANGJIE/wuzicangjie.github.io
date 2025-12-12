@@ -29,6 +29,7 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
             const LANG_PREFIX_MAP = Object.fromEntries(
                 Object.entries(LANG_CONFIG).map(([code, prefix]) => [prefix, code])
             );
+            const SUPPORTED_LANGS = new Set(Object.keys(LANG_CONFIG));
 
             const toggleMenu = (show) => {
                 const isHidden = menu.classList.contains('hidden');
@@ -68,6 +69,34 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 const normalizedSegment = firstSegment ? `${firstSegment}/` : '';
                 // Match the first path segment against known prefixes, defaulting to English
                 return LANG_PREFIX_MAP[normalizedSegment] ?? 'en';
+            };
+
+            const buildLangUrl = (lang) => {
+                const baseUrl = window.SITE_CONFIG?.baseUrl ?? '/';
+                const normalizedBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+                return `${normalizedBase}${LANG_CONFIG[lang] || ''}`;
+            };
+
+            const normalizeLangCode = (lang) => {
+                if (!lang || typeof lang !== 'string') return null;
+                const lower = lang.toLowerCase();
+                const primary = lower.split('-')[0];
+                if (SUPPORTED_LANGS.has(lower)) return lower;
+                if (SUPPORTED_LANGS.has(primary)) return primary;
+                return null;
+            };
+
+            const detectPreferredLanguage = () => {
+                const navigatorLangs = Array.isArray(navigator.languages) && navigator.languages.length
+                    ? navigator.languages
+                    : [navigator.language];
+
+                for (const lang of navigatorLangs) {
+                    const normalized = normalizeLangCode(lang);
+                    if (normalized) return normalized;
+                }
+
+                return 'en';
             };
 
             const getLangFromLink = (link) => {
@@ -196,6 +225,21 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
             };
 
             if (window.I18N) {
+                const tryAutoRedirect = () => {
+                    if (getLangFromPath() !== 'en') return;
+
+                    const redirectKey = 'preferredLangRedirected';
+                    if (sessionStorage.getItem(redirectKey) === 'true') return;
+
+                    const preferredLang = detectPreferredLanguage();
+                    if (!preferredLang || preferredLang === 'en') return;
+
+                    sessionStorage.setItem(redirectKey, 'true');
+                    window.location.replace(buildLangUrl(preferredLang));
+                };
+
+                tryAutoRedirect();
+
                 langLinks.forEach((link) => {
                     const lang = linkLangs.get(link);
 
