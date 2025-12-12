@@ -18,11 +18,19 @@ This is the source code for my personal website, hosted on GitHub Pages.
 2.  **Start Tailwind CSS in watch mode:**
 
     ```bash
-    npx tailwindcss -i src/input.css -o assets/css/style.css --watch
+    npm run watch
     ```
 
 3.  **Build for production (Minified):**
 
     ```bash
-    npx tailwindcss -i src/input.css -o assets/css/style.css --minify
+    npm run build
     ```
+
+## Automation
+
+This repository uses **GitHub Actions** to automatically build and minify the CSS whenever changes are pushed to the `main` branch.
+
+- **Workflow file**: `.github/workflows/build-css.yml`
+- **Trigger**: Push to `main` branch (when modifying `src/`, `index.html`, or `package.json`).
+- **Action**: Compiles Tailwind CSS and commits the updated `assets/css/style.css` back to the repository.
