@@ -184,11 +184,11 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 currentLang = lang;
             };
 
-                if (window.I18N && window.SITE_CONFIG) {
-                    langLinks.forEach(link => {
-                        link.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            const href = link.getAttribute('href');
+            if (window.I18N) {
+                langLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const href = link.getAttribute('href');
                         const lang = getLangFromLink(link);
                         updateContent(lang);
                         window.history.pushState({ lang }, '', href);
