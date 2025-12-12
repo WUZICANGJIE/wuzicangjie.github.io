@@ -6,7 +6,7 @@
   "scripts": {
     "build:css": "npx @tailwindcss/cli -i ./src/css/input.css -o ./assets/css/style.css --minify",
     "build:js": "npx terser src/js/main.js -o assets/js/main.js --compress --mangle",
-    "build:html": "npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true -o index.html src/index.html",
+    "build:html": "node scripts/build-html.js",
     "build": "npm run build:css && npm run build:js && npm run build:html",
     "watch": "npx @tailwindcss/cli -i ./src/css/input.css -o ./assets/css/style.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"

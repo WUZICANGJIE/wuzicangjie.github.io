@@ -171,12 +171,19 @@ END:VCARD`
 
     // Initialize on DOMContentLoaded
     document.addEventListener('DOMContentLoaded', () => {
-        // Detect language
-        const userLang = navigator.language || navigator.userLanguage; 
-        if (userLang.startsWith('zh')) {
+        // Detect language from URL first, then navigator
+        const path = window.location.pathname;
+        if (path.includes('/zh')) {
             currentLang = 'zh';
-        } else if (userLang.startsWith('ja')) {
+        } else if (path.includes('/ja')) {
             currentLang = 'ja';
+        } else {
+            const userLang = navigator.language || navigator.userLanguage; 
+            if (userLang.startsWith('zh')) {
+                currentLang = 'zh';
+            } else if (userLang.startsWith('ja')) {
+                currentLang = 'ja';
+            }
         }
         updateLanguage(currentLang);
 
@@ -185,8 +192,19 @@ END:VCARD`
         // Language Switcher Buttons
         document.querySelectorAll('.lang-item').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                e.preventDefault(); // Good practice
-                updateLanguage(btn.dataset.lang);
+                e.preventDefault();
+                const lang = btn.dataset.lang;
+                
+                // Update URL
+                let newPath = '/';
+                if (lang === 'zh') newPath = '/zh/';
+                if (lang === 'ja') newPath = '/ja/';
+                
+                if (window.location.pathname !== newPath) {
+                    window.history.pushState({}, '', newPath);
+                }
+
+                updateLanguage(lang);
             });
         });
 
