@@ -112,19 +112,25 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 element.classList.add('animate-fade-in');
             };
 
-            const parseLangFromHref = (href) => {
-                const url = new URL(href, window.location.origin);
-                const [, firstSegment] = url.pathname.split('/');
-                return Object.keys(LANG_CONFIG).find((key) => LANG_CONFIG[key].startsWith(`${firstSegment}/`)) || 'en';
+            const getLangFromPath = (path = window.location.pathname) => {
+                const pathOnly = path.startsWith('http') ? path.replace(/^https?:\/\/[^/]+/, '') : path;
+                const [, firstSegment = ''] = pathOnly.replace(/^\/+/, '/').split('/');
+                const normalizedSegment = firstSegment ? `${firstSegment}/` : '';
+                const entry = Object.entries(LANG_CONFIG).find(([, prefix]) => prefix === normalizedSegment);
+                return entry ? entry[0] : 'en';
             };
 
             const getLangFromLink = (link) => {
                 if (link?.dataset?.lang) return link.dataset.lang;
-                const href = link?.getAttribute('href') || window.location.href;
-                return parseLangFromHref(href);
+                const href = link?.getAttribute('href') || window.location.pathname;
+                return getLangFromPath(href);
             };
 
+            let currentLang = null;
+
             const updateContent = (lang) => {
+                if (!lang || lang === currentLang) return;
+
                 const data = window.I18N && window.I18N[lang];
                 if (!data) return;
 
@@ -171,6 +177,8 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                     const method = linkLang === lang ? 'add' : 'remove';
                     link.classList[method]('bg-gray-50', 'dark:bg-zinc-700/50', 'font-bold');
                 });
+
+                currentLang = lang;
             };
 
             if (window.I18N && window.SITE_CONFIG) {
@@ -186,9 +194,12 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 });
 
                 window.addEventListener('popstate', () => {
-                    const lang = parseLangFromHref(window.location.href);
+                    const lang = getLangFromPath(window.location.pathname);
                     updateContent(lang);
                 });
+
+                const initialLang = getLangFromPath();
+                updateContent(initialLang);
             }
         }
     });
