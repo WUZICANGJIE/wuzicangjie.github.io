@@ -20,15 +20,15 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
         const menuBtn = document.getElementById('lang-menu-btn');
         const menu = document.getElementById('lang-menu');
 
-            if (menuBtn && menu) {
-                const LANG_CONFIG = {
-                    en: '',
-                    zh: 'zh/',
-                    ja: 'ja/'
-                };
-                const LANG_PREFIX_MAP = Object.fromEntries(
-                    Object.entries(LANG_CONFIG).map(([code, prefix]) => [prefix, code])
-                );
+        if (menuBtn && menu) {
+            const LANG_CONFIG = {
+                en: '',
+                zh: 'zh/',
+                ja: 'ja/'
+            };
+            const LANG_PREFIX_MAP = Object.fromEntries(
+                Object.entries(LANG_CONFIG).map(([code, prefix]) => [prefix, code])
+            );
 
             const toggleMenu = (show) => {
                 const isHidden = menu.classList.contains('hidden');
