@@ -1,7 +1,8 @@
 // Trusted Types Policy
 if (window.trustedTypes && window.trustedTypes.createPolicy) {
     window.trustedTypes.createPolicy('default', {
-        createHTML: (string) => string
+        createHTML: (string) => string,
+        createScript: (string) => string
     });
 }
 
@@ -11,22 +12,56 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
             title: "孙少瀚 (無字倉頡)",
             name: "孙少瀚",
             bio: "Econ student.<br>Homelab/投资/音游",
+            description: "经济学学生，Homelab 爱好者，投资者，音游玩家。",
             saveContact: "添加联系人"
         },
         en: {
             title: "Shaohan Sun (無字倉頡)",
             name: "Shaohan Sun",
             bio: "Econ student.<br>Homelab/Investing/Rhythm Games",
+            description: "Econ student, Homelab enthusiast, Investor, Rhythm Game player.",
             saveContact: "Save Contact"
         },
         ja: {
             title: "孫少瀚 (無字倉頡)",
             name: "孫少瀚",
             bio: "Econ student.<br>自宅サーバー・投資・音ゲー",
+            description: "経済学の学生、自宅サーバー愛好家、投資家、音ゲーマー。",
             saveContact: "連絡先を追加"
         }
     };
     
+    // --- 2. JSON-LD Injection (Dynamic & CSP Safe) ---
+    function updateJsonLd(langData) {
+        let script = document.getElementById('json-ld');
+        if (!script) {
+            script = document.createElement('script');
+            script.id = 'json-ld';
+            script.type = 'application/ld+json';
+            document.head.appendChild(script);
+        }
+        
+        const jsonLd = {
+            "@context": "https://schema.org",
+            "@type": "ProfilePage",
+            "mainEntity": {
+                "@type": "Person",
+                "name": "Shaohan Sun",
+                "alternateName": ["孙少瀚", "孫少瀚", "ソンショウハン", "無字倉頡", "无字仓颉", "wuzicangjie", "mujisoketsu"],
+                "url": "https://me.wuzicangjie.com",
+                "image": "https://me.wuzicangjie.com/assets/images/og-image.webp",
+                "description": langData.description,
+                "sameAs": [
+                    "https://github.com/WUZICANGJIE",
+                    "https://x.com/mujisoketsu",
+                    "https://t.me/wuzicangjie"
+                ]
+            }
+        };
+        
+        script.textContent = JSON.stringify(jsonLd);
+    }
+
     const vcfData = {
         en: `BEGIN:VCARD
 VERSION:3.0
@@ -79,6 +114,15 @@ END:VCARD`
         document.documentElement.lang = lang;
         document.getElementById('profile-name').innerText = t.name;
         document.getElementById('profile-bio').innerHTML = t.bio;
+        
+        // Update Meta Description
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+            metaDesc.setAttribute('content', t.description);
+        }
+
+        // Update JSON-LD
+        updateJsonLd(t);
         
         const saveContactSpan = document.getElementById('btn-save-contact');
         if (saveContactSpan) {
@@ -145,7 +189,7 @@ END:VCARD`
         }
 
         // Avatar Error Handler
-        const avatarImg = document.querySelector('img[alt="Avatar"]');
+        const avatarImg = document.querySelector('img[alt="Shaohan Sun"]');
         if (avatarImg) {
             avatarImg.addEventListener('error', function() {
                 this.src = 'https://ui-avatars.com/api/?name=Wu+Zi&background=random';
