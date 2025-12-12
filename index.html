@@ -56,51 +56,6 @@
 
     <!-- Import Tailwind CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
-    <style>
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.6s ease-out both;
-        }
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-        .delay-400 { animation-delay: 0.4s; }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        @media (prefers-color-scheme: dark) {
-            .glass-card {
-                background: rgba(30, 30, 30, 0.7);
-            }
-        }
-        
-        /* Social icon common styles */
-        .social-icon {
-            width: 1.75rem; /* w-7 equivalent */
-            height: 1.75rem; /* h-7 equivalent */
-            margin-bottom: 0.25rem; /* mb-1 equivalent */
-            background-color: currentColor;
-            -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-            -webkit-mask-position: center;
-            mask-position: center;
-            -webkit-mask-size: contain;
-            mask-size: contain;
-        }
-
-        /* Prevent image saving/dragging */
-        img {
-            user-select: none;
-            -webkit-user-drag: none;
-            -webkit-touch-callout: none;
-        }
-    </style>
 </head>
 <body class="bg-gray-50 text-gray-800 dark:bg-zinc-900 dark:text-gray-200 min-h-[100dvh] min-w-[320px] flex flex-col justify-center items-center p-4 font-sans transition-colors duration-300">
 
