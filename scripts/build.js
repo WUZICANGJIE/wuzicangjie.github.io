@@ -64,6 +64,12 @@ async function build() {
     // 2. Copy Assets (CSS/JS/Images)
     const distAssets = path.join(distDir, 'assets');
     await fs.cp(assetsDir, distAssets, { recursive: true });
+
+    // Inject config into main.js to avoid extra request and CSP issues
+    const mainJsPath = path.join(distAssets, 'js', 'main.js');
+    const mainJsContent = await fs.readFile(mainJsPath, 'utf8');
+    const configContent = `window.I18N=${JSON.stringify(i18n)};window.SITE_CONFIG={baseUrl:"${site.baseUrl}"};`;
+    await fs.writeFile(mainJsPath, configContent + mainJsContent);
     
     // 3. Copy Public Files (Root files like robots.txt, CNAME)
     try {
@@ -110,6 +116,7 @@ async function build() {
             socialLinks: site.socialLinks,
             site,
             languages,
+            i18n, // Pass full i18n data for client-side switching
             year: currentYear,
             version
         };
