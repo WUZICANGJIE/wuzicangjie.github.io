@@ -60,9 +60,36 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
 
             // Client-side Language Switching
             const langLinks = menu.querySelectorAll('a');
-            
+
+            const metaCache = { name: new Map(), property: new Map() };
+            const cacheMeta = (type, names) => {
+                names.forEach((name) => {
+                    const element = document.querySelector(`meta[${type}="${name}"]`);
+                    if (element) metaCache[type].set(name, element);
+                });
+            };
+
+            cacheMeta('name', ['title', 'description']);
+            cacheMeta('property', [
+                'og:title',
+                'og:description',
+                'twitter:title',
+                'twitter:description',
+                'og:url',
+                'twitter:url'
+            ]);
+
+            const domRefs = {
+                profileName: document.getElementById('profile-name'),
+                profileBio: document.getElementById('profile-bio'),
+                contactBtn: document.getElementById('contact-btn'),
+                contactText: document.getElementById('contact-text'),
+                contactIcon: document.getElementById('contact-icon')
+            };
+            const profileNameParent = domRefs.profileName?.parentElement;
+
             const setMeta = (type, name, content) => {
-                const element = document.querySelector(`meta[${type}="${name}"]`);
+                const element = metaCache[type].get(name);
                 if (element) element.content = content;
             };
 
@@ -70,13 +97,11 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                 Object.entries(entries).forEach(([name, content]) => setMeta(type, name, content));
             };
 
-            const setText = (id, text) => {
-                const el = document.getElementById(id);
+            const setText = (el, text) => {
                 if (el) el.innerText = text;
             };
 
-            const setHTML = (id, html) => {
-                const el = document.getElementById(id);
+            const setHTML = (el, html) => {
                 if (el) el.innerHTML = html;
             };
 
@@ -126,22 +151,20 @@ if (window.trustedTypes && window.trustedTypes.createPolicy) {
                     });
                 }
 
-                setText('profile-name', data.name);
-                setHTML('profile-bio', data.bio);
-                setText('contact-text', data.saveContact);
+                setText(domRefs.profileName, data.name);
+                setHTML(domRefs.profileBio, data.bio);
+                setText(domRefs.contactText, data.saveContact);
 
-                const contactBtn = document.getElementById('contact-btn');
-                if (contactBtn && window.SITE_CONFIG) {
-                    contactBtn.href = `${window.SITE_CONFIG.baseUrl}${lang}.vcf`;
+                if (domRefs.contactBtn && window.SITE_CONFIG) {
+                    domRefs.contactBtn.href = `${window.SITE_CONFIG.baseUrl}${lang}.vcf`;
                 }
 
-                const profileName = document.getElementById('profile-name');
-                if (profileName && profileName.parentElement) {
-                    replayAnimation(profileName.parentElement);
+                if (profileNameParent) {
+                    replayAnimation(profileNameParent);
                 }
 
-                replayAnimation(document.getElementById('contact-text'));
-                replayAnimation(document.getElementById('contact-icon'));
+                replayAnimation(domRefs.contactText);
+                replayAnimation(domRefs.contactIcon);
 
                 langLinks.forEach(link => {
                     const linkLang = getLangFromLink(link);
