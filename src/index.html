@@ -49,8 +49,6 @@
     <meta name="apple-mobile-web-app-title" content="Shaohan" />
     <link rel="manifest" href="site.webmanifest" />
 
-    <!-- Preload Avatar for Performance -->
-    <link rel="preload" as="image" href="assets/images/avatar.webp">
     <!-- Preload CSS for Performance -->
     <link rel="preload" href="assets/css/style.css" as="style">
 
@@ -66,7 +64,7 @@
             <!-- Language Switcher (Dropdown) -->
             <div class="absolute top-4 right-4 inline-block text-left z-50">
                 <button id="lang-menu-btn" aria-label="Select Language" aria-haspopup="true" aria-expanded="false" aria-controls="lang-menu" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
-                    <img src="assets/icons/language.svg" width="24" height="24" class="w-6 h-6 opacity-60 dark:invert" alt="" aria-hidden="true" fetchpriority="high">
+                    <img src="assets/icons/language.svg" width="24" height="24" class="w-6 h-6 opacity-60 dark:invert" alt="" aria-hidden="true">
                 </button>
                 
                 <!-- Dropdown Menu -->
