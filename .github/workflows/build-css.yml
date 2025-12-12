@@ -42,6 +42,9 @@ jobs:
           cp robots.txt dist/ || true
           cp site.webmanifest dist/ || true
           cp sitemap.xml dist/ || true
+          cp favicon* dist/ || true
+          cp apple-touch-icon.png dist/ || true
+          cp web-app-manifest-*.png dist/ || true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
