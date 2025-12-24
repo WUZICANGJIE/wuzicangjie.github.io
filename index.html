@@ -147,7 +147,7 @@
 
         </div>
         
-        <footer class="mt-8 text-center text-xs text-gray-400 dark:text-gray-600 animate-fade-in opacity-0 delay-300">
+        <footer class="mt-8 text-center text-xs text-gray-400 dark:text-gray-600">
             <p id="footer-text">&copy; 2025 wuzicangjie.</p>
         </footer>
 
@@ -162,22 +162,19 @@
                 title: "孙少瀚 - 联系方式",
                 name: "孙少瀚",
                 bio: "Econ student.\nHomelab/投资/音游",
-                saveContact: "添加联系人",
-                footer: "© 2025 无字仓颉."
+                saveContact: "添加联系人"
             },
             en: {
                 title: "Shaohan Sun - Contact",
                 name: "Shaohan Sun",
                 bio: "Econ student.\nHomelab/Investing/Rhythm Games",
-                saveContact: "Save Contact",
-                footer: "© 2025 wuzicangjie."
+                saveContact: "Save Contact"
             },
             ja: {
                 title: "孫少瀚 - 連絡先",
                 name: "孫少瀚",
                 bio: "Econ student.\n自宅サーバー・投資・音ゲー",
-                saveContact: "連絡先を追加",
-                footer: "© 2025 無字倉頡."
+                saveContact: "連絡先を追加"
             }
         };
         
@@ -238,7 +235,6 @@ END:VCARD`
             document.getElementById('profile-name').innerText = t.name;
             document.getElementById('profile-bio').innerText = t.bio;
             document.getElementById('btn-save-contact').innerText = t.saveContact;
-            document.getElementById('footer-text').innerText = t.footer;
 
             // Update Menu Items State
             document.querySelectorAll('.lang-item').forEach(item => {
