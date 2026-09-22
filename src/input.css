@@ -1,1 +1,110 @@
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+
+/* Keep the small site scan explicit: build output and dependencies are not sources. */
+@source "../index.html";
+@source "../assets/js/main.js";
+
+[hidden] {
+    display: none !important;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+:is(a, button):focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
+}
+
+.lang-item {
+    display: block;
+    width: 100%;
+    padding: 0.625rem 1rem;
+    text-align: left;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.lang-item:focus-visible {
+    outline-offset: -3px;
+}
+
+.lang-item[aria-pressed="true"] {
+    font-weight: 700;
+    background: #f3f4f6;
+}
+
+.social-link {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 0.5rem;
+    border-radius: 0.75rem;
+    color: #4b5563;
+    transition: background-color 150ms;
+}
+
+.social-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-bottom: 0.25rem;
+    opacity: 0.8;
+}
+
+@media (hover: hover) {
+    .social-link:hover, .lang-item:hover {
+        background: #f3f4f6;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .glass-card {
+        background: rgba(30, 30, 30, 0.9);
+    }
+
+    .social-link {
+        color: #d1d5db;
+    }
+
+    .lang-item[aria-pressed="true"] {
+        background: #3f3f46;
+        color: #f3f4f6;
+    }
+
+    :is(a, button):focus-visible {
+        outline-color: #93c5fd;
+    }
+
+    @media (hover: hover) {
+        .social-link:hover, .lang-item:hover {
+            background: #3f3f46;
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.45s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}
