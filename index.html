@@ -15,7 +15,7 @@
     <meta property="og:image:alt" content="Shaohan Sun's avatar">
     <meta name="twitter:card" content="summary">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="preload" as="image" href="assets/images/avatar.webp">
+    <link rel="preload" as="image" href="assets/images/avatar.webp" fetchpriority="high">
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/main.js" defer></script>
 </head>
@@ -35,7 +35,7 @@
 
             <div class="relative mb-6 inline-block group">
                 <div class="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                <img src="assets/images/avatar.webp" alt="Shaohan Sun's avatar" width="112" height="112" class="relative w-28 h-28 rounded-full border-4 border-white dark:border-zinc-800 shadow-lg object-cover mx-auto">
+                <img id="avatar" src="assets/images/avatar.webp" alt="Shaohan Sun's avatar" width="112" height="112" fetchpriority="high" class="avatar-placeholder relative w-28 h-28 rounded-full border-4 border-white dark:border-zinc-800 shadow-lg object-cover mx-auto">
             </div>
 
             <h1 id="profile-name" class="text-2xl font-bold mb-2 tracking-tight" data-i18n="name">Shaohan Sun</h1>

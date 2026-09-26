@@ -19,6 +19,13 @@ body {
     backdrop-filter: blur(12px);
 }
 
+.avatar-placeholder {
+    /* 8x8 preview of the avatar, shown until the real image arrives on a slow connection. */
+    background: #f8f6f6 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAoklEQVR4ATyMiY7CMAxEn93maNll9/+/EBUQlJRLNCkOIMYa+Rjr6fJRznkp5s/6bYrpcbuTNgPTds/1lKh7nmdLoBK4nCbS4ch5SqTdjnEYOI8jRuRNyA/mRgnrNU0IqLmwWIGKCP3Piq7vaJyjjRHfRbv9oqq8CKHvWf3/gYB6h48B5z0i8n4QEZxhY+xo25ZSFnOh6kWoQ7U2+g1EpJ54AgAA///Ter4cAAAABklEQVQDAG0rWYtaJVEEAAAAAElFTkSuQmCC") center / cover;
+    /* Keep it off the border so it cannot tint the anti-aliased outer edge. */
+    background-clip: padding-box;
+}
+
 :is(a, button):focus-visible {
     outline: 3px solid #2563eb;
     outline-offset: 3px;
