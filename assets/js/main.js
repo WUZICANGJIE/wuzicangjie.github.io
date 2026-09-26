@@ -98,5 +98,9 @@
         if (!switcher.contains(event.target)) closeMenu();
     });
 
+    // The placeholder only covers the download. Removing it afterwards keeps the loaded avatar's edge unchanged.
+    const avatar = document.getElementById('avatar');
+    avatar.decode().then(() => avatar.classList.remove('avatar-placeholder'), () => {});
+
     document.getElementById('copyright-year').textContent = new Date().getFullYear();
 })();
