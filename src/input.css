@@ -4,6 +4,11 @@
 @source "../index.html";
 @source "../assets/js/main.js";
 
+/* Tailwind 4.3 changed its default sans-serif stack. Keep the one the site was designed with. */
+@theme {
+    --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
 [hidden] {
     display: none !important;
 }
