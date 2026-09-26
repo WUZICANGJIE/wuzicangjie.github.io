@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/WUZICANGJIE/wuzicangjie.github.io#readme",
   "devDependencies": {
-    "@tailwindcss/cli": "^4.1.17",
-    "tailwindcss": "^4.1.17"
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
   }
 }

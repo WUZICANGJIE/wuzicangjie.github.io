@@ -33,32 +33,22 @@ function assertEmbeddable(text, path, tag) {
   return text.trim();
 }
 
-async function inlineIcon(tag) {
-  const attrs = Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map(([, name, value]) => [name, value]));
-  const source = (await read(attrs.src)).replace(/<\?xml[\s\S]*?\?>|<!--[\s\S]*?-->|<title>[\s\S]*?<\/title>/g, '');
-  const [, svgAttrs, body] = source.match(/<svg\b([^>]*)>([\s\S]*)<\/svg>/) || [];
-  if (!body || !/\bviewBox="/.test(svgAttrs)) throw new Error(`${attrs.src} is not an inlineable SVG`);
-  if (/<(style|script)\b|\sid="/.test(body)) throw new Error(`${attrs.src} has styles, scripts, or ids that could affect the page`);
-  const kept = [...svgAttrs.matchAll(/\s(viewBox|fill|preserveAspectRatio)="([^"]*)"/g)]
-    .map(([, name, value]) => ` ${name}="${value}"`).join('');
-  const label = attrs.alt ? ` role="img" aria-label="${attrs.alt}"` : ' aria-hidden="true"';
-  // Icons render black inside <img>. Keep that color so their opacity and invert classes look the same.
-  return `<svg${kept} width="${attrs.width}" height="${attrs.height}" class="${attrs.class}" color="#000"${label}>`
-    + `${body.replace(/\s+/g, ' ').replace(/> </g, '><').trim()}</svg>`;
+// Drops indentation, blank lines, and whole-line comments. Line breaks stay, so the
+// script parses the same way.
+function compactScript(script) {
+  const lines = script.split('\n');
+  if (lines.some(line => (line.match(/`/g) || []).length % 2)) {
+    throw new Error('Cannot compact a script with a multi-line template literal');
+  }
+  return lines.map(line => line.trim()).filter(line => line && !line.startsWith('//')).join('\n');
 }
 
-// Put the stylesheet, script, and icons in the page itself. A slow connection then
-// renders the whole page from one response instead of waiting on 10 more requests.
+// Put the stylesheet and script in the page itself. A slow connection then renders
+// the whole page from one response instead of waiting on more requests.
 let html = (await read('index.html')).replace(/^[ \t]+/gm, '');
 
 const css = assertEmbeddable(await read('assets/css/style.css'), 'assets/css/style.css', 'style');
 html = replaceOnce(html, /<link rel="stylesheet" href="assets\/css\/style\.css">/, () => `<style>${css}</style>`);
-
-const iconTags = html.match(/<img\b[^>]*\bsrc="assets\/icons\/[^"]+\.svg"[^>]*>/g) || [];
-for (const tag of iconTags) {
-  const svg = await inlineIcon(tag);
-  html = replaceOnce(html, tag, () => svg);
-}
 
 // Running the script at the end of the body applies the saved or browser language
 // before the first paint, without waiting for a separate file.
@@ -70,9 +60,10 @@ if ('serviceWorker' in navigator) {
     });
 }`;
 html = replaceOnce(html, /<script src="assets\/js\/main\.js" defer><\/script>\r?\n/, () => '');
-html = replaceOnce(html, /<\/body>/, () => `<script>\n${script}\n${registerServiceWorker}\n</script>\n</body>`);
+const inlineScript = compactScript(`${script}\n${registerServiceWorker}`);
+html = replaceOnce(html, /<\/body>/, () => `<script>\n${inlineScript}\n</script>\n</body>`);
 
-const leftover = html.match(/assets\/(css|js|icons)\/[^"]*/);
+const leftover = html.match(/assets\/(css|js)\/[^"]*/);
 if (leftover) throw new Error(`dist/index.html still references ${leftover[0]}`);
 await writeFile(join(output, 'index.html'), html);
 

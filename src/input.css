@@ -58,19 +58,57 @@ body {
     padding: 0.75rem 0.5rem;
     border-radius: 0.75rem;
     color: #4b5563;
-    transition: background-color 150ms;
+    transition: background-color 150ms, color 150ms;
+}
+
+/* Brand colors for hover. Links without one, like X and GitHub, use the neutral fallbacks below. */
+.brand-line {
+    --brand: #00b900;
+    --brand-bg: #f0fdf4;
+    --brand-bg-dark: #0d542b33;
+}
+
+.brand-discord {
+    --brand: #5865f2;
+    --brand-bg: #eef2ff;
+    --brand-bg-dark: #312c8533;
+}
+
+.brand-telegram {
+    --brand: #0088cc;
+    --brand-bg: #f0f9ff;
+    --brand-bg-dark: #024a7033;
+}
+
+.brand-email {
+    --brand: oklch(63.7% 0.237 25.331);
+    --brand-bg: #fef2f2;
+    --brand-bg-dark: #82181a33;
 }
 
 .social-icon {
     width: 1.75rem;
     height: 1.75rem;
     margin-bottom: 0.25rem;
+    color: #000;
     opacity: 0.8;
+    transition: color 150ms, opacity 150ms;
 }
 
 @media (hover: hover) {
-    .social-link:hover, .lang-item:hover {
+    .lang-item:hover {
         background: #f3f4f6;
+    }
+
+    .social-link:hover {
+        background: var(--brand-bg, #f3f4f6);
+        color: var(--brand, #000);
+    }
+
+    /* Icons take their link's color on hover. */
+    .social-link:hover .social-icon {
+        color: inherit;
+        opacity: 1;
     }
 }
 
@@ -83,6 +121,10 @@ body {
         color: #d1d5db;
     }
 
+    .social-icon {
+        color: #fff;
+    }
+
     .lang-item[aria-pressed="true"] {
         background: #3f3f46;
         color: #f3f4f6;
@@ -93,19 +135,33 @@ body {
     }
 
     @media (hover: hover) {
-        .social-link:hover, .lang-item:hover {
+        .lang-item:hover {
             background: #3f3f46;
+        }
+
+        .social-link:hover {
+            background: var(--brand-bg-dark, #3f3f46);
+            color: var(--brand, #fff);
         }
     }
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
-    animation: fadeIn 0.45s ease-out both;
+    animation: fadeIn 0.6s ease-out both;
+}
+
+/* The button and links follow the card in. Tailwind's delay-* utilities set transition delays instead. */
+.fade-in-delay-100 {
+    animation-delay: 100ms;
+}
+
+.fade-in-delay-200 {
+    animation-delay: 200ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
